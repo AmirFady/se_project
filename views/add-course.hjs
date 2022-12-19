@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Add User</title>
+    <link rel='stylesheet' href='/styles/bootstrap.min.css' />
+    <link rel='stylesheet' href='/styles/style.css' />
+    <script src="/js/jquery-2.2.0.min.js" type="text/javascript"></script>
+    <script src="/js/bootstrap.min.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <script>
+    $(document).ready(function(){
+      $("#submit").click(function() {
+        const course = $('#coursename').val();
+        const code = $('#coursecode').val();
+        const facultyId = $('#facultyId').val();
+
+        const data = {
+          course,
+          code,
+          facultyId,
+        };
+
+        $.ajax({
+          type: "POST",
+          url: '/api/v1/courses',
+          data,
+          success: function(serverResponse){
+            if(serverResponse) {
+              alert(JSON.stringify(serverResponse));
+            }
+          }
+        });
+      });
+    });
+    </script>
+    <div>
+    <div>
+    {{#isAdmin}}
+        <nav class="navbar navbar-inverse" style="padding-left:130px;">
+          <ul class="nav navbar-nav">
+            <li><a href="/dashboard">Home</a></li>
+            <li><a href="/manage/grades">Manage Grades</a></li>
+            <li><a href="/manage/courses">Manage Courses</a></li>
+            <li><a href="/manage/requests">Manage Requests</a></li>
+            <li><a href="/">Logout</a></li>
+          </ul>
+       </nav>
+    {{/isAdmin}}
+
+    {{#isStudent}}
+        <nav class="navbar navbar-inverse" style="padding-left:130px;">
+          <ul class="nav navbar-nav">
+            <li><a href="/dashboard">Home</a></li>
+            <li><a href="/transcripts">Transcripts</a></li>
+            <li><a href="/courses">Courses</a></li>
+            <li><a href="/faculties/transfer"></a>transfer requests</a></li>
+            <li><a href="/">Logout</a></li>
+          </ul>
+       </nav>
+    {{/isStudent}}
+  </div>
+    <br/>
+    <form class="form-horizontal" style="width: 50%;">
+      <div class="form-group">
+          <label for="courseName" class="col-sm-2 control-label">Course Name</label>
+          <div class="col-sm-10">
+              <input type="text" class="form-control" id="coursename" name="courseName" placeholder="Course Name" value="">
+          </div>
+      </div>
+      <div class="form-group">
+          <label for="coursecode" class="col-sm-2 control-label">Course Code</label>
+          <div class="col-sm-10">
+              <input type="text" class="form-control" id="coursecode" name="coursecode" placeholder="Course Code" value="">
+          </div>
+      </div>
+      <div class="form-group">
+          <label for="email" class="col-sm-2 control-label">facultyId</label>
+          <div class="col-sm-10">
+              <input type="facultyId" class="form-control" id="facultyId" name="facultyId" placeholder="faculty id" value="">
+          </div>
+      </div>  
+      <div class="form-group">
+          <div class="col-sm-10 col-sm-offset-2">
+              <input id="submit" name="submit" type="button" value="Send" class="btn btn-primary">
+          </div>
+      </div>
+  </form>
+    </div>
+  </body>
+  </html>
