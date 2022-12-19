@@ -94,10 +94,11 @@ app.get('/manage/requests', async function(req, res) {
 });
 
   // Register HTTP endpoint to render /courses page
-  app.get('/manage/courses', async function(req, res) {
+  app.get('/manage/grades', async function(req, res) {
     const user = await getUser(req);
-    const courses = await db.select('*').from('se_project.courses');
-    return res.render('manage-courses', { ...user, courses });
+    const enrollment = await db.select('*').from('se_project.enrollments')
+    .innerJoin('se_project.users', 'se_project.enrollments.userId', 'se_project.users.id');
+    return res.render('manage-grades', { ...user, enrollment });
   });
 
 };

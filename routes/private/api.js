@@ -14,9 +14,8 @@ module.exports = function(app) {
     // Check if user already exists in the system
     const courseExists = await db.select('*').from('se_project.courses').where('code', req.body.code);
     if (!isEmpty(courseExists)) {
-      return res.status(400).send('course exists');
-    }
-    
+      return res.status(400).send('Course already exists');
+    }    
     const newCourse = {
       course: req.body.course,
       code: req.body.code,
@@ -36,7 +35,8 @@ module.exports = function(app) {
   app.put('/api/v1/courses/:courseId/drop', async function(req, res) {
     // Check if user already exists in the system
     try {
-      const course = await db('se_project.enrollments').where('courseId',req.params.courseId).update('active', false)
+      const course = await db('se_project.enrollments').where('courseId',req.params.courseId).update('active', false);
+
     } catch(e){
         console.log(e);
         res.send("do not exist");
@@ -68,6 +68,7 @@ module.exports = function(app) {
   app.post('/api/v1/faculties/transfer', async function(req, res) {
     // Check if user already exists in the system
     const pending = await db.select('*').from('se_project.transfer_requests').where('status', "pending");
+
     if (!isEmpty(pending)) {
       return res.status(400).send('you already have a pending request');
     }
@@ -97,5 +98,36 @@ module.exports = function(app) {
       return res.status(400).send('Could not add request');
     }
   });
+
+  app.get('/api/v1/enrollment/:courseId', async function(req, res) {
+    
+    try {
+      const enrollment = await db.select('*').from('se_project.enrollments').where('courseId', req.params.courseId);
+      return res.status(200).json(enrollment);
+    } catch (e) {
+      console.log(e.message);
+
+      return res.status(400).send('Could not add request');
+    }
+  });
+
+  app.put('/api/v1/enrollment/:courseId', async function(req, res) {
+    const courseGrades = req.body.courseGrades
+    try {
+      for ( const record in courseGrades ) {
+      const course = await db('se_project.enrollments')
+      .where('courseId',req.params.courseId)
+      .where('userId', record.userId)
+      .update('grade', record.grade);
+    }
+      
+    
+      return res.status(200).json(course);
+    } catch(e){
+        console.log(e);
+        res.send("do not exist");
+    };
+  });
+
 
 }

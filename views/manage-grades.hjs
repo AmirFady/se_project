@@ -9,12 +9,32 @@
   </head>
   <body>
        <script>
-       function drop(id){
-       api_url = "/api/v1/courses/" + String(id) + "/drop"
+        const gradeElements = document.getElementsByName("grade");
+        const data = [];
+        for (const gradeElement in gradeElemets) {
+          grade = gradeElement.val();
+          userId = gradeElement.id();
+          data.push({"userId": userId, "grade": grade})
+        }
+        $.ajax({
+          type: "GET",
+          url: /api/v1/enrollment/:courseId,
+          success: function(serverResponse){
+            if(serverResponse) {
+              alert(JSON.stringify(serverResponse));
+            }
+          }
+        });
+
+        $("#update").click(function() {
+        const grade = $('#update').val();
+        const data = {
+          grade,
+        };
 
         $.ajax({
           type: "PUT",
-          url: api_url,
+          url: /api/v1/enrollment/:courseId,
           success: function(serverResponse){
             if(serverResponse) {
               alert(JSON.stringify(serverResponse));
@@ -54,19 +74,18 @@
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">Course Code</th>
-            <th scope="col">Course Name</th>
-            <th scope="col">Credit Hours</th>
-            <th scope="col">Drop</th>
+            <th scope="col">student id</th>
+            <th scope="col">student Name</th>
+            <th scope="col">grade</th>
           </tr>
           {{#enrollment}}
             <tr>
-              <td>{{code}}</td>
-              <td>{{course}}</td>
-              <td>{{credit hours}}</td>
-              <td><input id="drop" name="Drop" type="button" value="drop" onclick="drop({{courseId}})" class="btn btn-primary"></td>
+              <td>{{userId}}</td>
+              <td>{{firstName}}</td>
+              <td><input type="text" class="form-control" id="{{userId}}" name="grade" placeholder="grade" value="{{grade}}"></td>
             </tr>
           {{/enrollment}}
+          <input id="update" name="update" type="button" value="update" class="btn btn-primary">
         </thead>
       </table>
     </div>
