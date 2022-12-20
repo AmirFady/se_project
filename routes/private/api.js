@@ -1,4 +1,5 @@
 const { v4 } = require('uuid');
+const { isEmpty } = require('lodash');
 const db = require('../../connectors/db');
 const roles = require('../../constants/roles');
 
