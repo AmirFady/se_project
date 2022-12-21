@@ -1,3 +1,4 @@
+const { truncate } = require('lodash');
 const db = require('../../connectors/db');
 const roles = require('../../constants/roles');
 const { getSessionToken } = require('../../utils/session');
@@ -41,22 +42,26 @@ module.exports = function(app) {
   });
 
 // Register HTTP endpoint to render /courses page
-app.get('/faculties/transfer', async function(req, res) {
+app.get('/transfer', async function(req, res) {
   const user = await getUser(req);
   const faculties = await db.select('*').from('se_project.faculties')
   const requests = await db.select('*')
   .from('se_project.transfer_requests')
-  .where('userId', user.id)
+  .where('status', pending)
   .innerJoin('se_project.faculties', 'se_project.faculties.id', 'se_project.transfer_requests.newFacultyId')
 
-  return res.render('transfer-requests', { ...user, requests, faculties });
+  return res.render('transfer-requests', { ...user, requests, faculties, pendingrequest });
 });
 
   
   // Register HTTP endpoint to render /courses page
   app.get('/courses', async function(req, res) {
     const user = await getUser(req);
-    const courses = await db.select('*').from('se_project.courses');
+    const courses = await db.select('*')
+    .from('se_project.enrollments')
+    .where('userId', user.id)
+    .where('active',true)
+    .innerJoin('se_project.courses','se_project.courses.id','se_project.enrollments.courseId')
     return res.render('courses', { ...user, courses });
   });
 
@@ -85,12 +90,11 @@ app.get('/faculties/transfer', async function(req, res) {
   // Register HTTP endpoint to render /courses page
 app.get('/manage/requests', async function(req, res) {
   const user = await getUser(req);
-  const faculties = await db.select('*').from('se_project.faculties')
   const requests = await db.select('*')
-  .from('se_project.transfer_requests')
+  .from('se_project.transfer_requests').where('status',"pending")
   .innerJoin('se_project.faculties', 'se_project.faculties.id', 'se_project.transfer_requests.newFacultyId')
-
-  return res.render('transfer-requests', { requests, faculties });
+  .innerJoin('se_project.users','se_project.users.id','se_project.transfer_requests.userId')
+  return res.render('manage-requests', { requests, user });
 });
 
   // Register HTTP endpoint to render /courses page

@@ -9,19 +9,21 @@
   </head>
   <body>
        <script>
-       function drop(id){
-       api_url = "/api/v1/courses/" + String(id) + "/drop"
-
+       function drop(Cid, uid){
+       api_url = "/api/v1/courses/" + String(Cid) + "/drop"
+       const data = { 'userId': uid };
+       console.log(data);
         $.ajax({
           type: "PUT",
           url: api_url,
+          data,
           success: function(serverResponse){
             if(serverResponse) {
               alert(JSON.stringify(serverResponse));
             }
           }
         });
-       }
+       };
     </script>
 
     <div>
@@ -44,7 +46,7 @@
             <li><a href="/dashboard">Home</a></li>
             <li><a href="/transcripts">Transcripts</a></li>
             <li><a href="/courses">Courses</a></li>
-            <li><a href="/faculties/transfer">transfer requests</a></li>
+            <li><a href="/transfer">transfer requests</a></li>
             <li><a href="/">Logout</a></li>
           </ul>
        </nav>
@@ -59,14 +61,14 @@
             <th scope="col">Credit Hours</th>
             <th scope="col">Drop</th>
           </tr>
-          {{#enrollment}}
+          {{#courses}}
             <tr>
               <td>{{code}}</td>
               <td>{{course}}</td>
               <td>{{credit hours}}</td>
-              <td><input id="drop" name="Drop" type="button" value="drop" onclick="drop({{courseId}})" class="btn btn-primary"></td>
+              <td><input id="drop" name="Drop" type="button" value="drop" onclick="drop({{courseId}}, {{userId}})" class="btn btn-primary"></td>
             </tr>
-          {{/enrollment}}
+          {{/courses}}
         </thead>
       </table>
     </div>

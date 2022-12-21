@@ -27,7 +27,7 @@
             <li><a href="/dashboard">Home</a></li>
             <li><a href="/transcripts">Transcripts</a></li>
             <li><a href="/courses">Courses</a></li>
-            <li><a href="/faculties/transfer">transfer requests</a></li>
+            <li><a href="/transfer">transfer requests</a></li>
             <li><a href="/">Logout</a></li>
           </ul>
        </nav>
@@ -35,8 +35,8 @@
         <script>
     $(document).ready(function(){
       $("#submit").click(function() {
-        const userId = ${{se_project.id}};
-        const currentFacultyId = ${{se_project.faculty}};
+        const userId = {{id}};
+        const currentFacultyId = {{facultyId}};
         const newFacultyId = $('#faculties').val();
             
         const data = {
@@ -51,6 +51,11 @@
           data,
           success: function(serverResponse){
             if(serverResponse) {
+              alert(JSON.stringify(serverResponse));
+            }
+          },
+          error: function(serverResponse){
+              if(serverResponse) {
               alert(JSON.stringify(serverResponse));
             }
           }
@@ -79,8 +84,9 @@
           {{/requests}}
         </thead>
       </table>
-    {{/requests.length}}
+     {{/requests.length}}
 
+      {{^pendingrequest.length}}
       <div class="form-group">
           <label for="faculty" class="col-sm-2 control-label">Faculty</label>
           <div class="col-sm-10">
@@ -94,6 +100,9 @@
           </div>
       </div>
               <input id="submit" name="submit" type="button" value="submit" class="btn btn-primary">
+      {{/pendingrequest.length}}
+
     </div>
+  
   </body>
   </html>

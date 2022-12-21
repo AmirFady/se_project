@@ -9,6 +9,9 @@
   </head>
   <body>
        <script>
+       $(document).ready(function(){
+        $("#update").click(function() {
+          console.log("clicked")
         const gradeElements = document.getElementsByName("grade");
         const data = [];
         for (const gradeElement in gradeElemets) {
@@ -16,6 +19,7 @@
           userId = gradeElement.id();
           data.push({"userId": userId, "grade": grade})
         }
+        console.log(data);
         $.ajax({
           type: "GET",
           url: /api/v1/enrollment/:courseId,
@@ -24,6 +28,8 @@
               alert(JSON.stringify(serverResponse));
             }
           }
+        });
+        });
         });
 
         $("#update").click(function() {
@@ -64,7 +70,7 @@
             <li><a href="/dashboard">Home</a></li>
             <li><a href="/transcripts">Transcripts</a></li>
             <li><a href="/courses">Courses</a></li>
-            <li><a href="/faculties/transfer">transfer requests</a></li>
+            <li><a href="/transfer">transfer requests</a></li>
             <li><a href="/">Logout</a></li>
           </ul>
        </nav>

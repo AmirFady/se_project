@@ -28,7 +28,7 @@
             <li><a href="/dashboard">Home</a></li>
             <li><a href="/transcripts">Transcripts</a></li>
             <li><a href="/courses">Courses</a></li>
-            <li><a href="/faculties/transfer">transfer requests</a></li>
+            <li><a href="/transfer">transfer requests</a></li>
             <li><a href="/">Logout</a></li>
           </ul>
        </nav>

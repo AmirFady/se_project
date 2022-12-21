@@ -35,18 +35,27 @@ module.exports = function(app) {
   // Register HTTP endpoint to drop course from enrollements
   app.put('/api/v1/courses/:courseId/drop', async function(req, res) {
     // Check if user already exists in the system
+    console.log("api called");
     try {
-      const course = await db('se_project.enrollments').where('courseId',req.params.courseId).update('active', false);
-
+      console.log("trying");
+      console.log("req.body.userId");
+      console.log(req.body);
+      const course = await db('se_project.enrollments')
+      .where('courseId',req.params.courseId)
+      .where('userId', req.body.userId)
+      .update('active', false);
+      console.log(course);
+      return res.status(200);
     } catch(e){
         console.log(e);
         res.send("do not exist");
+        return res.status(400);
     };
 });
   // Register HTTP endpoint to create new course
   app.post('/api/v1/courses', async function(req, res) {
     // Check if user already exists in the system
-    const courseExists = await db.select('*').from('se_project.courses').where('code', req.body.code);
+    const courseExists = await db.select('*').from('se_project.enrollment').where('code', req.body.code);
     if (!isEmpty(courseExists)) {
       return res.status(400).send('course exists');
     }
@@ -68,7 +77,7 @@ module.exports = function(app) {
 
   app.post('/api/v1/faculties/transfer', async function(req, res) {
     // Check if user already exists in the system
-    const pending = await db.select('*').from('se_project.transfer_requests').where('status', "pending");
+    const pending = await db.select('*').from('se_project.transfer_requests').where('userId',req.body.userId).where('status', "pending");
 
     if (!isEmpty(pending)) {
       return res.status(400).send('you already have a pending request');
@@ -76,11 +85,12 @@ module.exports = function(app) {
     
     const newrequest = {
       userId : req.body.userId,
-      newFaculty: req.body.newFacultyId,
-      currentfaculty: req.body.currentFacultyId,
+      newFacultyId: req.body.newFacultyId,
+      currentFacultyId: req.body.currentFacultyId,
     };
     try {
-      const course = await db('se_project.courses').insert(newrequest).returning('*');
+      const course = await db('se_project.transfer_requests').insert(newrequest);
+      console.log('course');
       return res.status(200).json(course);
     } catch (e) {
       console.log(e.message);
@@ -116,6 +126,7 @@ module.exports = function(app) {
     const courseGrades = req.body.courseGrades
     try {
       for ( const record in courseGrades ) {
+        console.log(record);
       const course = await db('se_project.enrollments')
       .where('courseId',req.params.courseId)
       .where('userId', record.userId)
@@ -130,5 +141,23 @@ module.exports = function(app) {
     };
   });
 
+  app.post('/api/v1/transfers/:transferId', async function(req, res) {
+    // Check if user already exists in the system
+    console.log("api called");
+    try {
+      console.log("trying");
+      console.log("req.body.userId");
+      console.log(req.body);
+      const update = await db('se_project.transfer_requests')
+      .where('id',req.param.transferId)
+      .update('status',req.body.action)
+
+      return res.status(200);
+    } catch(e){
+        console.log(e);
+        res.send("do not exist");
+        return res.status(400);
+    };
+});
 
 }
