@@ -27,12 +27,13 @@
               success: function (serverResponse) {
                 if (serverResponse) {
                   alert(JSON.stringify(serverResponse));
+                  window.location.href = "/manage/courses";
                 }
               }
             })
             };
           
-                   $(document).ready(function(){
+          $(document).ready(function(){
       // Handle Autocomplete Selection Change
       $(".dropdown-menu li a").click(function(){
         const index = $(this).attr('index');

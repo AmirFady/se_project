@@ -10,29 +10,45 @@
   <body>
        <script>
 
-       $(document).ready(function(){
+   
         $("#update").click(function() {
           console.log("clicked");
          const gradeElement = document.getElementsByName("grade");
          const data = [];
+         console.log(gradeElement);
          for ( const gradeElements in gradeElement) {
           grade = gradeElement.values();
-          userId = gradeElement.ID();
+          userId = gradeElement.id();
           data.push({"userId": userId, "grade": grade})
           }
          const url = "/api/v1/enrollment/" + String(courseId);
          console.log(data);
-         $.ajax({
-          type: "GET",
-          url: url,
-          success: function(serverResponse){
-            if(serverResponse) {
-              alert(JSON.stringify(serverResponse));
-            }
-          }
+
         });
-        });
-        });
+
+      $(document).ready(function(){
+      // Handle Autocomplete Selection Change
+      $(".dropdown-menu li a").click(function(){
+        const index = $(this).attr('index');
+        $("#courseDropdown").attr('index', index);
+        $("#courseDropdown").text($(this).text());
+            const d = index;
+             const _url = "/api/v1/enrollment/" + String(index);
+            $.ajax({
+              type: "GET",
+              url: _url,
+              d,
+              success: function (serverResponse) {
+                if (serverResponse) {
+                  alert(JSON.stringify(serverResponse));
+                  window.location.href="/manage/grades";
+
+                }
+              }
+            });
+          });
+          });
+       
 
         $("#update").click(function() {
         const grade = $('#update').val();
@@ -97,6 +113,22 @@
           <input id="update" name="update" type="button" value="update" class="btn btn-primary">
         </thead>
       </table>
+                  <div class="form-group">
+          <label for="course" class="col-sm-2 control-label">Course</label>
+          <div class="col-sm-10">
+            <div class="btn-group">
+              <button index=0 id='courseDropdown' class="btn">Courses</button>
+              <button class="btn dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                  {{#courses}}
+                     <li><a index="{{id}}">{{course}}</a></li>
+                  {{/courses}}              
+              </ul>
+            </div>
+          </div>
+      </div>
     </div>
   </body>
   </html>
