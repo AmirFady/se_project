@@ -4,11 +4,6 @@ const db = require('../../connectors/db');
 const roles = require('../../constants/roles');
 
 module.exports = function(app) {
-  // Register HTTP endpoint to get all users
-  app.get('/api/v1/users', async function(req, res) {
-    const results = await db.select('*').from('users');
-    return res.json(results)
-  });
 
   // Register HTTP endpoint to drop course from enrollements
   app.put('/api/v1/courses/:courseId/drop', async function(req, res) {
@@ -163,80 +158,5 @@ app.put('/api/v1/courses/:courseId', async function(req, res) {
       res.send("do not exist");
   };
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // Register HTTP endpoint to create new course
-  app.post('/api/v1/courses', async function(req, res) {
-    // Check if user already exists in the system
-    const courseExists = await db.select('*').from('se_project.courses').where('code', req.body.code);
-    if (!isEmpty(courseExists)) {
-      return res.status(400).send('Course already exists');
-    }    
-    const newCourse = {
-      course: req.body.course,
-      code: req.body.code,
-      facultyId: req.body.facultyId,
-    };
-    try {
-      const course = await db('se_project.courses').insert(newCourse).returning('*');
-      console.log(newCourse)
-      return res.status(200).json(course);
-    } catch (e) {
-      console.log(e.message);
-      return res.status(400).send('Could not add course');
-    }
-  });
-  // Register HTTP endpoint to create new course
-  app.post('/api/v1/courses', async function(req, res) {
-    // Check if user already exists in the system
-    const courseExists = await db.select('*').from('se_project.enrollment').where('code', req.body.code);
-    if (!isEmpty(courseExists)) {
-      return res.status(400).send('course exists');
-    }
-    
-    const newCourse = {
-      course: req.body.course,
-      code: req.body.code,
-      facultyId: req.body.facultyId,
-    };
-    try {
-      const course = await db('se_project.courses').insert(newCourse).returning('*');
-      console.log(newCourse)
-      return res.status(200).json(course);
-    } catch (e) {
-      console.log(e.message);
-      return res.status(400).send('Could not add course');
-    }
-  });
-
-
-  app.get('/api/v1/faculties/:facultyId', async function(req, res) {
-    
-    try {
-      const courses = await db.select('*').from('se_project.courses').where('facultyId', req.params.facultyId);
-      return res.status(200).json(courses);
-    } catch (e) {
-      console.log(e.message);
-
-      return res.status(400).send('Could not add request');
-    }
-  });
-
-
-
-
-
 
 }

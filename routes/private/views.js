@@ -107,38 +107,4 @@ module.exports = function(app) {
       return res.render('edit-courses', { ...user, course, faculty });
     });
 
-
-
-
-
-
-
-
-  
-  // Register HTTP endpoint to render /enrollment page
-  app.get('/enrollment', async function(req, res) {
-    const user = await getUser(req);
-    const enrollment = await db.select('*')
-    .from('se_project.enrollments')
-    .where('userId', user.id)
-    .innerJoin('se_project.users', 'se_project.enrollments.userId', 'se_project.users.id')
-    .innerJoin('se_project.courses', 'se_project.enrollments.courseId', 'se_project.courses.id');
-
-    return res.render('enrollment', { enrollment });
-  });
-
-  // Register HTTP endpoint to render /users/add page
-  app.get('/users/add', async function(req, res) {
-    return res.render('add-user');
-  });
-
-  // Register HTTP endpoint to render /courses/add page
-  app.get('/courses/add', async function(req, res) {
-    return res.render('add-course');
-  });
-
-
-
-
-
 };

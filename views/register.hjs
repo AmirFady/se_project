@@ -63,7 +63,7 @@
     <div class="center">
       <h1>Register</h1>
     </div>
-    <div style="padding-left: 500px">
+    
     <form class="form-horizontal" style="width: 50%;">
       <div class="form-group">
           <label for="firstName" class="col-sm-2 control-label">First Name</label>
