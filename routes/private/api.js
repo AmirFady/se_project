@@ -104,14 +104,14 @@ app.put('/api/v1/enrollment/:courseId', async function(req, res) {
     .where('userId', record.userId)
     .update('grade', record.grade);
   }
-    
-  
     return res.status(200).json(course);
   } catch(e){
       console.log(e);
       res.send("do not exist");
   };
 });
+
+
 app.get('/api/v1/faculties/:facultyId', async function(req, res) {
   console.log("api")
    const d =req.params.facultyId;

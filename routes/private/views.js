@@ -37,7 +37,14 @@ module.exports = function(app) {
     .from('se_project.enrollments')
     .where('userId', user.id)
     .innerJoin('se_project.courses', 'se_project.enrollments.courseId', 'se_project.courses.id');
+    const grade = [await db.select('grade').from('se_project.enrollments').where('userId', user.id)];
+    const hrs = [await db.select('').from('se_project.enrollments').where('userId', user.id)];
+    for(const i=0; i<grade.length-1; i++){
+      if(grade[i]=='a'){
+      
 
+      }
+    }
     return res.render('transcripts', { ...user,enrollment });
   });
 

@@ -54,7 +54,7 @@
 
     <div>
     <div>
-
+    {{#isAdmin}}
         <nav class="navbar navbar-inverse" style="padding-left:130px;">
           <ul class="nav navbar-nav">
             <li><a href="/dashboard">Home</a></li>
@@ -64,6 +64,19 @@
             <li><a href="/">Logout</a></li>
           </ul>
        </nav>
+    {{/isAdmin}}
+
+    {{#isStudent}}
+        <nav class="navbar navbar-inverse" style="padding-left:130px;">
+          <ul class="nav navbar-nav">
+            <li><a href="/dashboard">Home</a></li>
+            <li><a href="/transcripts">Transcripts</a></li>
+            <li><a href="/courses">Courses</a></li>
+            <li><a href="/transfer">transfer requests</a></li>
+            <li><a href="/">Logout</a></li>
+          </ul>
+       </nav>
+    {{/isStudent}}
   </div>
     <br/>
       <table class="table">

@@ -7,6 +7,10 @@
     <script src="/js/jquery-2.2.0.min.js" type="text/javascript"></script>
     <script src="/js/bootstrap.min.js" type="text/javascript"></script>
   </head>
+    <script>
+    const gpa = 4;
+    console.log(gpa);
+    </script>
   <body>
     <div>
     <div>
@@ -42,6 +46,7 @@
             <th scope="col">Course Name</th>
             <th scope="col">Credit Hours</th>
             <th scope="col">Grade</th>
+            <th scope="col">GPA: </th>
           </tr>
           {{#enrollment}}
             <tr>
@@ -49,8 +54,8 @@
               <td>{{course}}</td>
               <td>{{credit hours}}</td>
               <td>{{grade}}</td>
-            </tr>
           {{/enrollment}}
+          </tr>
         </thead>
       </table>
     </div>
