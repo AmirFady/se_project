@@ -65,24 +65,7 @@ app.post('/api/v1/transfers/:transferId', async function(req, res) {
       return res.status(400);
   };
 });
-app.post('/api/v1/transfers/:transferId', async function(req, res) {
-  // Check if user already exists in the system
-  console.log("api called");
-  try {
-    console.log("trying");
-    console.log(req.body.action);
-    console.log(req.params.transferId);
-    const update = await db('se_project.transfer_requests')
-    .where('id',req.params.transferId)
-    .update('status',req.body.action);
-    console.log('sql run');
-    return res.status(200).json(update);
-  } catch(e){
-      console.log(e);
-      res.send("do not exist");
-      return res.status(400);
-  };
-});
+
 app.get('/api/v1/enrollment/:courseId', async function(req, res) {
     
   try {
@@ -126,6 +109,7 @@ app.get('/api/v1/faculties/:facultyId', async function(req, res) {
     return res.status(400).send('Could not add request');
   }
 });
+
 app.delete('/api/v1/courses/:courseId', async function(req, res) {
     
   try {
