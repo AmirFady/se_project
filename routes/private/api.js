@@ -118,9 +118,12 @@ app.put('/api/v1/enrollment/:courseId', async function(req, res) {
   };
 });
 app.get('/api/v1/faculties/:facultyId', async function(req, res) {
-    
+  console.log("api")
+   const d =req.params.facultyId;
+    console.log(d)
+
   try {
-    const courses = await db.select('*').from('se_project.courses').where('facultyId', req.params.facultyId);
+    const courses = await db.select('*').from('se_project.courses').where('facultyId', d);
     return res.status(200).json(courses);
   } catch (e) {
     console.log(e.message);

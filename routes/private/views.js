@@ -67,6 +67,8 @@ module.exports = function(app) {
     return res.render('courses', { ...user, courses });
   });
 
+
+  
   // Register HTTP endpoint to render /courses page
   app.get('/manage/transfers', async function(req, res) {
     const user = await getUser(req);
