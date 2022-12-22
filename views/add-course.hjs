@@ -42,7 +42,7 @@
             <li><a href="/dashboard">Home</a></li>
             <li><a href="/manage/grades">Manage Grades</a></li>
             <li><a href="/manage/courses">Manage Courses</a></li>
-            <li><a href="/manage/requests">Manage Requests</a></li>
+            <li><a href="/manage/transfers">Manage Requests</a></li>
             <li><a href="/">Logout</a></li>
           </ul>
        </nav>
@@ -54,7 +54,7 @@
             <li><a href="/dashboard">Home</a></li>
             <li><a href="/transcripts">Transcripts</a></li>
             <li><a href="/courses">Courses</a></li>
-            <li><a href="/transfer"></a>transfer requests</a></li>
+            <li><a href="/transfer">transfer requests</a></li>
             <li><a href="/">Logout</a></li>
           </ul>
        </nav>

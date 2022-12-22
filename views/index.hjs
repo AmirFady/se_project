@@ -39,11 +39,29 @@
       });
       </script>    
     <div>
-      <nav class="navbar navbar-inverse" style="padding-left:130px;">
+    {{#isAdmin}}
+        <nav class="navbar navbar-inverse" style="padding-left:130px;">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home</a></li>
+            <li><a href="/dashboard">Home</a></li>
+            <li><a href="/manage/grades">Manage Grades</a></li>
+            <li><a href="/manage/courses">Manage Courses</a></li>
+            <li><a href="/manage/transfers">Manage Requests</a></li>
+            <li><a href="/">Logout</a></li>
           </ul>
-      </nav>
+       </nav>
+    {{/isAdmin}}
+
+    {{#isStudent}}
+        <nav class="navbar navbar-inverse" style="padding-left:130px;">
+          <ul class="nav navbar-nav">
+            <li><a href="/dashboard">Home</a></li>
+            <li><a href="/transcripts">Transcripts</a></li>
+            <li><a href="/courses">Courses</a></li>
+            <li><a href="/transfer">transfer requests</a></li>
+            <li><a href="/">Logout</a></li>
+          </ul>
+       </nav>
+    {{/isStudent}}
     </div>
 
     <div class="center">

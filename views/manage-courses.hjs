@@ -9,21 +9,28 @@
   </head>
   <body>
        <script>
-       function drop(Cid, uid){
-       api_url = "/api/v1/courses/" + String(Cid) + "/drop"
-       const data = { 'userId': uid };
-       console.log(data);
-        $.ajax({
-          type: "PUT",
-          url: api_url,
-          data,
-          success: function(serverResponse){
-            if(serverResponse) {
-              alert(JSON.stringify(serverResponse));
-            }
-          }
-        });
-       };
+          console.log("script");
+          function Update(courseId) {
+            const url = "/manage/courses/edit?courseId=" + String(courseId) ;
+            window.location.href = url
+          };
+          function Delete(courseId) {
+            const api_url = "/api/v1/courses/" + String(courseId)
+            const data = { 'courseId': courseId };
+            console.log(data);
+            $.ajax({
+              type: "DELETE",
+              url: api_url,
+              data,
+              success: function (serverResponse) {
+                if (serverResponse) {
+                  alert(JSON.stringify(serverResponse));
+                }
+              }
+            });
+          };
+
+
     </script>
 
     <div>
@@ -59,14 +66,14 @@
             <th scope="col">Course Code</th>
             <th scope="col">Course Name</th>
             <th scope="col">Credit Hours</th>
-            <th scope="col">Drop</th>
           </tr>
           {{#courses}}
             <tr>
               <td>{{code}}</td>
               <td>{{course}}</td>
               <td>{{credit hours}}</td>
-              <td><input id="drop" name="Drop" type="button" value="drop" onclick="drop({{courseId}}, {{userId}})" class="btn btn-primary"></td>
+              <td><input id="delete" name="delete" type="button" value="delete" onclick="Delete({{id}})" class="btn btn-primary"></td>
+              <td><input id="update" name="update" type="button" value="update" onclick="Update({{id}})" class="btn btn-primary"></td>
             </tr>
           {{/courses}}
         </thead>

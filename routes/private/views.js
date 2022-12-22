@@ -42,14 +42,16 @@ module.exports = function(app) {
   });
 
 // Register HTTP endpoint to render /courses page
-app.get('/transfer', async function(req, res) {
+  app.get('/transfer', async function(req, res) {
   const user = await getUser(req);
   const faculties = await db.select('*').from('se_project.faculties')
-  const requests = await db.select('*')
+  const pendingrequest = await db.select('*')
   .from('se_project.transfer_requests')
-  .where('status', pending)
+  .where('status', "pending")
   .innerJoin('se_project.faculties', 'se_project.faculties.id', 'se_project.transfer_requests.newFacultyId')
-
+ const requests = await db.select('*')
+ .from('se_project.transfer_requests')
+ .innerJoin('se_project.faculties', 'se_project.faculties.id', 'se_project.transfer_requests.newFacultyId')
   return res.render('transfer-requests', { ...user, requests, faculties, pendingrequest });
 });
 
@@ -65,6 +67,52 @@ app.get('/transfer', async function(req, res) {
     return res.render('courses', { ...user, courses });
   });
 
+  // Register HTTP endpoint to render /courses page
+  app.get('/manage/transfers', async function(req, res) {
+    const user = await getUser(req);
+    const requests = await db.select('*')
+    .from('se_project.transfer_requests').where('status',"pending")
+    //.innerJoin('se_project.faculties', 'se_project.faculties.id', 'se_project.transfer_requests.newFacultyId')
+    //.innerJoin('se_project.users','se_project.users.id','se_project.transfer_requests.userId')
+    return res.render('manage-requests', { requests, user });
+  });
+
+  // Register HTTP endpoint to render /courses page
+  app.get('/manage/grades', async function(req, res) {
+    const user = await getUser(req);
+    const enrollment = await db.select('*').from('se_project.enrollments')
+    .innerJoin('se_project.users', 'se_project.enrollments.userId', 'se_project.users.id');
+    return res.render('manage-grades', { ...user, enrollment });
+  });
+  // Register HTTP endpoint to render /courses page
+  app.get('/manage/courses', async function(req, res) {
+    const user = await getUser(req);
+    const courses = await db.select('*')
+    .from('se_project.courses')
+    const faculty = await db.select('*')
+    .from('se_project.faculties')
+    return res.render('manage-courses', { ...user, courses, faculty });
+  });
+    // Register HTTP endpoint to render /courses page
+    app.get('/manage/courses/edit', async function(req, res) {
+      const courseId = req.query.courseId;
+      const user = await getUser(req);
+      const course = await db.select('*')
+      .from('se_project.courses')
+      .where("id", courseId);
+      const faculty = await db.select('*')
+      .from('se_project.faculties');
+      return res.render('edit-courses', { ...user, course, faculty });
+    });
+
+
+
+
+
+
+
+
+  
   // Register HTTP endpoint to render /enrollment page
   app.get('/enrollment', async function(req, res) {
     const user = await getUser(req);
@@ -87,22 +135,8 @@ app.get('/transfer', async function(req, res) {
     return res.render('add-course');
   });
 
-  // Register HTTP endpoint to render /courses page
-app.get('/manage/requests', async function(req, res) {
-  const user = await getUser(req);
-  const requests = await db.select('*')
-  .from('se_project.transfer_requests').where('status',"pending")
-  .innerJoin('se_project.faculties', 'se_project.faculties.id', 'se_project.transfer_requests.newFacultyId')
-  .innerJoin('se_project.users','se_project.users.id','se_project.transfer_requests.userId')
-  return res.render('manage-requests', { requests, user });
-});
 
-  // Register HTTP endpoint to render /courses page
-  app.get('/manage/grades', async function(req, res) {
-    const user = await getUser(req);
-    const enrollment = await db.select('*').from('se_project.enrollments')
-    .innerJoin('se_project.users', 'se_project.enrollments.userId', 'se_project.users.id');
-    return res.render('manage-grades', { ...user, enrollment });
-  });
+
+
 
 };

@@ -27,8 +27,8 @@
         function update(id, action){
          const api_url = "/api/v1/transfers/" + String(id);
          const data = {'action': action};
-         
-         cosole.log("fx");
+
+         console.log("fx");
 
           $.ajax({
            type: "POST",
@@ -67,10 +67,11 @@
               <td>{{firstName}}</td>
               <td>{{currentFacultyId}}</td>
               <td>{{faculty}}</td>
-              <td><input id="accept" name="accept" type="button" value="accept" onclick="update({{id}},"accepted")" class="btn btn-primary"></td>
-              <td><input id="reject" name="reject" type="button" value="reject" onclick="update({{id}},"rejected")" class="btn btn-primary"></td>
+              <td><input id="accept" name="accept" type="button" value="accept" onclick="update({{id}}, 'accepted' )" class="btn btn-primary"></td>
+              <td><input id="reject" name="reject" type="button" value="reject" onclick="update({{id}}, 'rejected' )" class="btn btn-primary"></td>
             </tr>
             
+
           {{/requests}}
           
         </thead>
