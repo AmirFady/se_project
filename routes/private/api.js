@@ -78,17 +78,11 @@ app.get('/api/v1/enrollment/:courseId', async function(req, res) {
   }
 });
 app.put('/api/v1/enrollment/:courseId', async function(req, res) {
-  const courseGrades = req.body.grades;
-  console.log('fffffffffffffff')
-  console.log(courseGrades)
   try {
-    for ( const record in courseGrades ) {
-      console.log(record);
       const course = await db('se_project.enrollments')
       .where('courseId',req.params.courseId)
-      .where('userId', record.userId)
-      .update('grade', record.grade);
-    };
+      .where('userId', req.body.userId)
+      .update('grade', req.body.grade);
     return res.status(200);
   } catch(e){
       console.log(e);

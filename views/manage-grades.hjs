@@ -13,25 +13,28 @@
           console.log("clicked");
           const gradeElements = document.getElementsByName("grade");
           const grades = [];
-          for (let gradeElement of gradeElements.entries()) {
+           gradeElements.forEach(
+            function(node, index){
             //console.log(gradeElement);
-            grade = gradeElement[1].value;
-            userId = gradeElement[1].id;
-            grades.push({ "userId": userId, "grade": grade })
-          };
-          const data = {'grades': grades};
-          console.log(data);
-          const url = "/api/v1/enrollment/" + String({{ courseId }});
-          $.ajax({
-            type: "PUT",
-            url: url,
-            data,
-            success: function (serverResponse) {
+            grade = node.value;
+            userId = node.id;
+            data = {
+              'userId': userId,
+              'grade': grade 
+              }
+            console.log(data);
+            const url = "/api/v1/enrollment/" + String({{ courseId }});
+            $.ajax({
+              type: "PUT",
+              url: url,
+              data,
+              success: function (serverResponse) {
                 if (serverResponse) {
                   window.location.href = "/manage/grades?courseId=" + String({{ courseId }});
                 }
-            }
+             }
           });
+        });
         };
 
         $(document).ready(function () {
