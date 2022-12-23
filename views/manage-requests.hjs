@@ -66,7 +66,7 @@
             <tr>
               <td>{{userId}}</td>
               <td>{{firstName}}</td>
-              <td>{{currentFacultyId}}</td>
+              <td>{{oldfaculty}}</td>
               <td>{{faculty}}</td>
               <td><input id="accept" name="accept" type="button" value="accept" onclick="update({{tid}}, 'accepted' )" class="btn btn-primary"></td>
               <td><input id="reject" name="reject" type="button" value="reject" onclick="update({{tid}}, 'rejected' )" class="btn btn-primary"></td>

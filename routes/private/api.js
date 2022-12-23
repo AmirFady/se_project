@@ -11,14 +11,12 @@ module.exports = function(app) {
     console.log("api called");
     try {
       console.log("trying");
-      console.log("req.body.userId");
-      console.log(req.body);
       const course = await db('se_project.enrollments')
       .where('courseId',req.params.courseId)
       .where('userId', req.body.userId)
       .update('active', false);
       console.log(course);
-      return res.status(200);
+      return res.status(200).send('dropped');
     } catch(e){
         console.log(e);
         res.send("do not exist");

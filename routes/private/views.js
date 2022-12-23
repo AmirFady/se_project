@@ -83,6 +83,7 @@ module.exports = function(app) {
     .from('se_project.transfer_requests').where('status',"pending")
     .innerJoin('se_project.faculties', 'se_project.faculties.fid', 'se_project.transfer_requests.newFacultyId')
     .innerJoin('se_project.users','se_project.users.uid','se_project.transfer_requests.userId')
+
     return res.render('manage-requests', { requests, user });
   });
 

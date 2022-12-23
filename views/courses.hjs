@@ -1,77 +1,82 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Users</title>
-    <link rel='stylesheet' href='/styles/bootstrap.min.css' />
-    <link rel='stylesheet' href='/styles/style.css' />
-    <script src="/js/jquery-2.2.0.min.js" type="text/javascript"></script>
-    <script src="/js/bootstrap.min.js" type="text/javascript"></script>
-  </head>
-  <body>
-       <script>
-       function drop(Cid, uid){
-       api_url = "/api/v1/courses/" + String(Cid) + "/drop"
-       const data = { 'userId': uid };
-       console.log(data);
-        $.ajax({
-          type: "PUT",
-          url: api_url,
-          data,
-          success: function(serverResponse){
-            if(serverResponse) {
-              alert(JSON.stringify(serverResponse));
-              location.reload();
-            }
+
+<head>
+  <title>Users</title>
+  <link rel='stylesheet' href='/styles/bootstrap.min.css' />
+  <link rel='stylesheet' href='/styles/style.css' />
+  <script src="/js/jquery-2.2.0.min.js" type="text/javascript"></script>
+  <script src="/js/bootstrap.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+  <script>
+    function drop(Cid, uid) {
+      api_url = "/api/v1/courses/" + String(Cid) + "/drop"
+      const data = { 'userId': uid };
+      console.log(data);
+      $.ajax({
+        type: "PUT",
+        url: api_url,
+        data,
+        success: function (serverResponse) {
+          if (serverResponse) {
+            alert(JSON.stringify(serverResponse));
+            console.log("rld");
+            location.reload();
           }
-        });
-       };
-    </script>
+        }
+      });
+    };
+  </script>
 
+  <div>
     <div>
-    <div>
-    {{#isAdmin}}
-        <nav class="navbar navbar-inverse" style="padding-left:130px;">
-          <ul class="nav navbar-nav">
-            <li><a href="/dashboard">Home</a></li>
-            <li><a href="/manage/grades">Manage Grades</a></li>
-            <li><a href="/manage/courses">Manage Courses</a></li>
-            <li><a href="/manage/transfers">Manage Requests</a></li>
-            <li><a href="/">Logout</a></li>
-          </ul>
-       </nav>
-    {{/isAdmin}}
+      {{#isAdmin}}
+      <nav class="navbar navbar-inverse" style="padding-left:130px;">
+        <ul class="nav navbar-nav">
+          <li><a href="/dashboard">Home</a></li>
+          <li><a href="/manage/grades">Manage Grades</a></li>
+          <li><a href="/manage/courses">Manage Courses</a></li>
+          <li><a href="/manage/transfers">Manage Requests</a></li>
+          <li><a href="/">Logout</a></li>
+        </ul>
+      </nav>
+      {{/isAdmin}}
 
-    {{#isStudent}}
-        <nav class="navbar navbar-inverse" style="padding-left:130px;">
-          <ul class="nav navbar-nav">
-            <li><a href="/dashboard">Home</a></li>
-            <li><a href="/transcripts">Transcripts</a></li>
-            <li><a href="/courses">Courses</a></li>
-            <li><a href="/transfer">transfer requests</a></li>
-            <li><a href="/">Logout</a></li>
-          </ul>
-       </nav>
-    {{/isStudent}}
-  </div>
-    <br/>
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Course Code</th>
-            <th scope="col">Course Name</th>
-            <th scope="col">Credit Hours</th>
-            <th scope="col">Drop</th>
-          </tr>
-          {{#courses}}
-            <tr>
-              <td>{{code}}</td>
-              <td>{{course}}</td>
-              <td>{{credit hours}}</td>
-              <td><input id="drop" name="Drop" type="button" value="drop" onclick="drop({{courseId}}, {{userId}})" class="btn btn-primary"></td>
-            </tr>
-          {{/courses}}
-        </thead>
-      </table>
+      {{#isStudent}}
+      <nav class="navbar navbar-inverse" style="padding-left:130px;">
+        <ul class="nav navbar-nav">
+          <li><a href="/dashboard">Home</a></li>
+          <li><a href="/transcripts">Transcripts</a></li>
+          <li><a href="/courses">Courses</a></li>
+          <li><a href="/transfer">transfer requests</a></li>
+          <li><a href="/">Logout</a></li>
+        </ul>
+      </nav>
+      {{/isStudent}}
     </div>
-  </body>
-  </html>
+    <br />
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Course Code</th>
+          <th scope="col">Course Name</th>
+          <th scope="col">Credit Hours</th>
+          <th scope="col">Drop</th>
+        </tr>
+        {{#courses}}
+        <tr>
+          <td>{{code}}</td>
+          <td>{{course}}</td>
+          <td>{{credit hours}}</td>
+          <td><input id="drop" name="Drop" type="button" value="drop" onclick="drop({{courseId}}, {{userId}})"
+              class="btn btn-primary"></td>
+        </tr>
+        {{/courses}}
+      </thead>
+    </table>
+  </div>
+</body>
+
+</html>
