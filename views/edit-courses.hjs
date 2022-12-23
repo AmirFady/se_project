@@ -30,7 +30,8 @@
             success: function(serverResponse) {
                 if(serverResponse) {
                 alert('Successfully updated course');
-                window.location.href="/manage/courses";
+                history.back();
+                location.reload();
                 }
             },
             error: function(errorResponse) {

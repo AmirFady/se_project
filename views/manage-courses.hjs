@@ -28,7 +28,7 @@
               success: function (serverResponse) {
                 if (serverResponse) {
                   alert(JSON.stringify(serverResponse));
-                  window.location.href = "/manage/courses";
+                  location.reload();
                 }
               }
             })
@@ -95,7 +95,7 @@
               </button>
               <ul class="dropdown-menu">
                   {{#faculty}}
-                     <li><a index="{{id}}">{{faculty}}</a></li>
+                     <li><a index="{{fid}}">{{faculty}}</a></li>
                   {{/faculty}}              
               </ul>
             </div>

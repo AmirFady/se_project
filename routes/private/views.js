@@ -81,8 +81,8 @@ module.exports = function(app) {
     const user = await getUser(req);
     const requests = await db.select('*')
     .from('se_project.transfer_requests').where('status',"pending")
-    //.innerJoin('se_project.faculties', 'se_project.faculties.fid', 'se_project.transfer_requests.newFacultyId')
-    //.innerJoin('se_project.users','se_project.users.cid','se_project.transfer_requests.userId')
+    .innerJoin('se_project.faculties', 'se_project.faculties.fid', 'se_project.transfer_requests.newFacultyId')
+    .innerJoin('se_project.users','se_project.users.uid','se_project.transfer_requests.userId')
     return res.render('manage-requests', { requests, user });
   });
 
