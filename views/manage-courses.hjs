@@ -1,129 +1,134 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Users</title>
-    <link rel='stylesheet' href='/styles/bootstrap.min.css' />
-    <link rel='stylesheet' href='/styles/style.css' />
-    <script src="/js/jquery-2.2.0.min.js" type="text/javascript"></script>
-    <script src="/js/bootstrap.min.js" type="text/javascript"></script>
-  </head>
-  <body>
-       <script>
 
-      
-          console.log("script");
-          function Update(courseId) {
+<head>
+  <title>Users</title>
+  <link rel='stylesheet' href='/styles/bootstrap.min.css' />
+  <link rel='stylesheet' href='/styles/style.css' />
+  <script src="/js/jquery-2.2.0.min.js" type="text/javascript"></script>
+  <script src="/js/bootstrap.min.js" type="text/javascript"></script>
+</head>
 
-            const url = "/manage/courses/edit?courseId=" + String(courseId) ;
-            window.location.href = url;
-          };
-          function Delete(courseId) {
-            const api_url = "/api/v1/courses/" + String(courseId)
-            const data = { 'courseId': courseId };
-            console.log(data);
-            $.ajax({
-              type: "DELETE",
-              url: api_url,
-              data,
-              success: function (serverResponse) {
-                if (serverResponse) {
-                  alert(JSON.stringify(serverResponse));
-                  location.reload();
-                }
-              }
-            })
-            };
-          
-        $(document).ready(function () {
-          // Handle Autocomplete Selection Change
-          $(".dropdown-menu li a").click(function () {
-            const index = $(this).attr('index');
-            $("#facultyDropdown").attr('index', index);
-            $("#facultyDropdown").text($(this).text());
-            const d = index;
-            const _url = "/api/v1/faculties/" + String(index);
-            console.log(String(index));
-            $.ajax({
-              type: "GET",
-              url: _url,
-              d,
-              success: function (serverResponse) {
-                if (serverResponse) {
-                  window.location.href = "/manage/courses?facultyId="+String(index);
-                }
-              }
-            });
-          });
+<body>
+  <script>
+
+
+    console.log("script");
+    function Update(courseId) {
+
+      const url = "/manage/courses/edit?courseId=" + String(courseId);
+      window.location.href = url;
+    };
+    function Delete(courseId) {
+      const api_url = "/api/v1/courses/" + String(courseId)
+      const data = { 'courseId': courseId };
+      console.log(data);
+      $.ajax({
+        type: "DELETE",
+        url: api_url,
+        data,
+        success: function (serverResponse) {
+          if (serverResponse) {
+            alert(JSON.stringify(serverResponse));
+            location.reload();
+          }
+        }
+      })
+    };
+
+    $(document).ready(function () {
+      // Handle Autocomplete Selection Change
+      $(".dropdown-menu li a").click(function () {
+        const index = $(this).attr('index');
+        $("#facultyDropdown").attr('index', index);
+        $("#facultyDropdown").text($(this).text());
+        const d = index;
+        const _url = "/api/v1/faculties/" + String(index);
+        console.log(String(index));
+        $.ajax({
+          type: "GET",
+          url: _url,
+          d,
+          success: function (serverResponse) {
+            if (serverResponse) {
+              window.location.href = "/manage/courses?facultyId=" + String(index);
+            }
+          }
         });
+      });
+    });
 
-    </script>
+  </script>
 
+  <div>
     <div>
-    <div>
-    {{#isAdmin}}
-        <nav class="navbar navbar-inverse" style="padding-left:130px;">
-          <ul class="nav navbar-nav">
-            <li><a href="/dashboard">Home</a></li>
-            <li><a href="/manage/grades">Manage Grades</a></li>
-            <li><a href="/manage/courses">Manage Courses</a></li>
-            <li><a href="/manage/transfers">Manage Requests</a></li>
-            <li><a href="/">Logout</a></li>
-          </ul>
-       </nav>
-    {{/isAdmin}}
+      {{#isAdmin}}
+      <nav class="navbar navbar-inverse" style="padding-left:130px;">
+        <ul class="nav navbar-nav">
+          <li><a href="/dashboard">Home</a></li>
+          <li><a href="/manage/grades">Manage Grades</a></li>
+          <li><a href="/manage/courses">Manage Courses</a></li>
+          <li><a href="/manage/transfers">Manage Requests</a></li>
+          <li><a href="/">Logout</a></li>
+        </ul>
+      </nav>
+      {{/isAdmin}}
 
-    {{#isStudent}}
-        <nav class="navbar navbar-inverse" style="padding-left:130px;">
-          <ul class="nav navbar-nav">
-            <li><a href="/dashboard">Home</a></li>
-            <li><a href="/transcripts">Transcripts</a></li>
-            <li><a href="/courses">Courses</a></li>
-            <li><a href="/transfer">transfer requests</a></li>
-            <li><a href="/">Logout</a></li>
-          </ul>
-       </nav>
-    {{/isStudent}}
-  </div>
-    <br/>
-                <div class="form-group">
-            <label for="faculty" class="col-sm-2 control-label">Faculty</label>
-           <div class="col-sm-10">
-            <div class="btn-group">
-              <button index=0 id='facultyDropdown' class="btn">Faculties</button>
-              <button class="btn dropdown-toggle" data-toggle="dropdown">
-                <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu">
-                  {{#faculty}}
-                     <li><a index="{{fid}}">{{faculty}}</a></li>
-                  {{/faculty}}              
-              </ul>
-            </div>
-          </div>
-      </div>
-    {{#facultyId}}
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Course Code</th>
-            <th scope="col">Course Name</th>
-            <th scope="col">Credit Hours</th>
-          </tr>
-          
-          {{#course}}
-            <tr>
-              <td>{{code}}</td>
-              <td>{{course}}</td>
-              <td>{{credit hours}}</td>
-              <td><input id="delete" name="delete" type="button" value="delete" onclick="Delete({{cid}})" class="btn btn-primary"></td>
-              <td><input id="update" name="update" type="button" value="update" onclick="Update({{cid}})" class="btn btn-primary"></td>
-            </tr>
-          {{/course}}
-         
-        </thead>
-      </table>
-
+      {{#isStudent}}
+      <nav class="navbar navbar-inverse" style="padding-left:130px;">
+        <ul class="nav navbar-nav">
+          <li><a href="/dashboard">Home</a></li>
+          <li><a href="/transcripts">Transcripts</a></li>
+          <li><a href="/courses">Courses</a></li>
+          <li><a href="/transfer">transfer requests</a></li>
+          <li><a href="/">Logout</a></li>
+        </ul>
+      </nav>
+      {{/isStudent}}
     </div>
-    {{/facultyId}}
-  </body>
-  </html>
+    <br />
+    <div class="form-group">
+      <label for="faculty" class="col-sm-2 control-label">Faculty</label>
+      <div class="col-sm-10">
+        <div class="btn-group">
+          <button index=0 id='facultyDropdown' class="btn">Faculties</button>
+          <button class="btn dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            {{#faculty}}
+            <li><a index="{{fid}}">{{faculty}}</a></li>
+            {{/faculty}}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {{#facultyId}}
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Course Code</th>
+          <th scope="col">Course Name</th>
+          <th scope="col">Credit Hours</th>
+        </tr>
+
+        {{#course}}
+        <tr>
+          <td>{{code}}</td>
+          <td>{{course}}</td>
+          <td>{{credit hours}}</td>
+          <td><input id="delete" name="delete" type="button" value="delete" onclick="Delete({{cid}})"
+              class="btn btn-primary"></td>
+          <td><input id="update" name="update" type="button" value="update" onclick="Update({{cid}})"
+              class="btn btn-primary"></td>
+        </tr>
+        {{/course}}
+
+      </thead>
+    </table>
+
+  </div>
+  {{/facultyId}}
+</body>
+
+</html>
