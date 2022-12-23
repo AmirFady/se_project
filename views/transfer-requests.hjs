@@ -78,7 +78,7 @@
           </tr>
           {{#requests}}
             <tr>
-              <td>{{id}}</td>
+              <td>{{tid}}</td>
               <td>{{currentFacultyId}}</td>
               <td>{{faculty}}</td>
               <td>{{status}}</td>
@@ -96,7 +96,7 @@
             <div class="btn-group">
               <select name="faculties" id="faculties">
                   {{#faculties}}
-                     <option value="{{id}}">{{faculty}}</option>
+                     <option value="{{fid}}">{{faculty}}</option>
                   {{/faculties}}
               </select>            
             </div>

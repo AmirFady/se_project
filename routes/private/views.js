@@ -12,9 +12,9 @@ const getUser = async function(req) {
   const user = await db.select('*')
     .from('se_project.sessions')
     .where('token', sessionToken)
-    .innerJoin('se_project.users', 'se_project.sessions.userId', 'se_project.users.id')
+    .innerJoin('se_project.users', 'se_project.sessions.userId', 'se_project.users.uid')
     .innerJoin('se_project.roles', 'se_project.users.roleId', 'se_project.roles.id')
-    .innerJoin('se_project.faculties', 'se_project.users.facultyId', 'se_project.faculties.id')
+    .innerJoin('se_project.faculties', 'se_project.users.facultyId', 'se_project.faculties.fid')
     .first();
   
   console.log('user =>', user)
@@ -35,10 +35,10 @@ module.exports = function(app) {
     const user = await getUser(req);
     const enrollment = await db.select('*')
     .from('se_project.enrollments')
-    .where('userId', user.id)
-    .innerJoin('se_project.courses', 'se_project.enrollments.courseId', 'se_project.courses.id');
-    const grade = [await db.select('grade').from('se_project.enrollments').where('userId', user.id)];
-    const hrs = [await db.select('').from('se_project.enrollments').where('userId', user.id)];
+    .where('userId', user.uid)
+    .innerJoin('se_project.courses', 'se_project.enrollments.courseId', 'se_project.courses.cid');
+    const grade = [await db.select('grade').from('se_project.enrollments').where('userId', user.uid)];
+    const hrs = [await db.select('').from('se_project.enrollments').where('userId', user.uid)];
     for(const i=0; i<grade.length-1; i++){
       if(grade[i]=='a'){
       
@@ -55,10 +55,10 @@ module.exports = function(app) {
   const pendingrequest = await db.select('*')
   .from('se_project.transfer_requests')
   .where('status', "pending")
-  .innerJoin('se_project.faculties', 'se_project.faculties.id', 'se_project.transfer_requests.newFacultyId')
+  .innerJoin('se_project.faculties', 'se_project.faculties.fid', 'se_project.transfer_requests.newFacultyId')
  const requests = await db.select('*')
  .from('se_project.transfer_requests')
- .innerJoin('se_project.faculties', 'se_project.faculties.id', 'se_project.transfer_requests.newFacultyId')
+ .innerJoin('se_project.faculties', 'se_project.faculties.fid', 'se_project.transfer_requests.newFacultyId')
   return res.render('transfer-requests', { ...user, requests, faculties, pendingrequest });
 });
 
@@ -68,9 +68,9 @@ module.exports = function(app) {
     const user = await getUser(req);
     const courses = await db.select('*')
     .from('se_project.enrollments')
-    .where('userId', user.id)
+    .where('userId', user.uid)
     .where('active',true)
-    .innerJoin('se_project.courses','se_project.courses.id','se_project.enrollments.courseId')
+    .innerJoin('se_project.courses','se_project.courses.cid','se_project.enrollments.courseId')
     return res.render('courses', { ...user, courses });
   });
 
@@ -81,8 +81,8 @@ module.exports = function(app) {
     const user = await getUser(req);
     const requests = await db.select('*')
     .from('se_project.transfer_requests').where('status',"pending")
-    //.innerJoin('se_project.faculties', 'se_project.faculties.id', 'se_project.transfer_requests.newFacultyId')
-    //.innerJoin('se_project.users','se_project.users.id','se_project.transfer_requests.userId')
+    //.innerJoin('se_project.faculties', 'se_project.faculties.fid', 'se_project.transfer_requests.newFacultyId')
+    //.innerJoin('se_project.users','se_project.users.cid','se_project.transfer_requests.userId')
     return res.render('manage-requests', { requests, user });
   });
 
@@ -93,7 +93,7 @@ module.exports = function(app) {
     const courses = await db.select('*')
     .from('se_project.courses');
     const enrollment_query = db.select('*').from('se_project.enrollments')
-    .innerJoin('se_project.users', 'se_project.enrollments.userId', 'se_project.users.id');
+    .innerJoin('se_project.users', 'se_project.enrollments.userId', 'se_project.users.uid');
     if(courseId) {
       enrollment_query.where('courseId',courseId);
     };
@@ -110,7 +110,7 @@ module.exports = function(app) {
     const faculty = await db.select('*')
     .from('se_project.faculties')
     const course_query = db.select('*').from('se_project.courses')
-    .innerJoin('se_project.faculties', 'se_project.courses.facultyId', 'se_project.faculties.id');
+    .innerJoin('se_project.faculties', 'se_project.courses.facultyId', 'se_project.faculties.fid');
     if(facultyId) {
       course_query.where('facultyId',facultyId);
     };
@@ -123,7 +123,7 @@ module.exports = function(app) {
       const user = await getUser(req);
       const course = await db.select('*')
       .from('se_project.courses')
-      .where("id", courseId);
+      .where("cid", courseId);
       const faculty = await db.select('*')
       .from('se_project.faculties');
       return res.render('edit-courses', { ...user, course, faculty });

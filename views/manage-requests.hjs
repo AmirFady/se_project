@@ -68,8 +68,8 @@
               <td>{{firstName}}</td>
               <td>{{currentFacultyId}}</td>
               <td>{{faculty}}</td>
-              <td><input id="accept" name="accept" type="button" value="accept" onclick="update({{id}}, 'accepted' )" class="btn btn-primary"></td>
-              <td><input id="reject" name="reject" type="button" value="reject" onclick="update({{id}}, 'rejected' )" class="btn btn-primary"></td>
+              <td><input id="accept" name="accept" type="button" value="accept" onclick="update({{tid}}, 'accepted' )" class="btn btn-primary"></td>
+              <td><input id="reject" name="reject" type="button" value="reject" onclick="update({{tid}}, 'rejected' )" class="btn btn-primary"></td>
             </tr>
             
 

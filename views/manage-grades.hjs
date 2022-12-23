@@ -92,7 +92,7 @@
               </button>
               <ul class="dropdown-menu">
                   {{#courses}}
-                     <li><a index="{{id}}">{{course}}</a></li>
+                     <li><a index="{{cid}}">{{course}}</a></li>
                   {{/courses}}              
               </ul>
             </div>

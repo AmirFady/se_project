@@ -101,7 +101,7 @@
             </div>
 
             <div class="col-sm-10 col-sm-offset-2">
-                <input id="update" name="update" type="button" value="update" onclick="Update({{id}})" class="btn btn-primary">
+                <input id="update" name="update" type="button" value="update" onclick="Update({{cid}})" class="btn btn-primary">
         </div>
     </form>
     {{/course}}

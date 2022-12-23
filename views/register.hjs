@@ -99,7 +99,7 @@
               </button>
               <ul class="dropdown-menu">
                   {{#faculties}}
-                     <li><a index="{{id}}">{{faculty}}</a></li>
+                     <li><a index="{{fid}}">{{faculty}}</a></li>
                   {{/faculties}}              
               </ul>
             </div>

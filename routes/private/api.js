@@ -55,7 +55,7 @@ app.post('/api/v1/transfers/:transferId', async function(req, res) {
     console.log(req.body.action);
     console.log(req.params.transferId);
     const update = await db('se_project.transfer_requests')
-    .where('id',req.params.transferId)
+    .where('tid',req.params.transferId)
     .update('status',req.body.action);
     console.log('sql run');
     return res.status(200).json(update);
@@ -115,7 +115,7 @@ app.delete('/api/v1/courses/:courseId', async function(req, res) {
     
   try {
     const courses = await db.select('*').from('se_project.courses')
-    .where('id',req.body.courseId)
+    .where('cid',req.body.courseId)
     .delete("courses");
     return res.status(200).json(courses);
   } catch (e) {
@@ -131,7 +131,7 @@ app.put('/api/v1/courses/:courseId', async function(req, res) {
   console.log("trying");
     const update = await db.select('*')
     .from('se_project.courses')
-    .where('id', req.params.courseId)
+    .where('cid', req.params.courseId)
     .update('course',req.body.name)
     .update('code',req.body.code)
     .update('credit hours',req.body.hours);

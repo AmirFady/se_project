@@ -62,7 +62,7 @@ module.exports = function(app) {
 
     // create a session containing information about the user and expiry time
     const session = {
-      userId: user.id,
+      userId: user.uid,
       token,
       expiresAt,
     };
