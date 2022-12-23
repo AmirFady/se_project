@@ -50,6 +50,7 @@ module.exports = function (app) {
       .innerJoin('se_project.faculties', 'se_project.faculties.fid', 'se_project.transfer_requests.newFacultyId');
     const requests = await db.select('*')
       .from('se_project.transfer_requests')
+      .where('userId',user.uid)
       .innerJoin('se_project.faculties', 'se_project.faculties.fid', 'se_project.transfer_requests.newFacultyId');
     return res.render('transfer-requests', { ...user, requests, faculties, pendingrequest });
   });

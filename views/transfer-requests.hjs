@@ -35,7 +35,7 @@
         <script>
     $(document).ready(function(){
       $("#submit").click(function() {
-        const userId = {{id}};
+        const userId = {{uid}};
         const currentFacultyId = {{facultyId}};
         const newFacultyId = $('#faculties').val();
             

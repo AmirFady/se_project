@@ -26,9 +26,9 @@
 
     console.log("script");
 
-    function update(id, action) {
+    function update(id, action, userId, newFacultyId) {
       const api_url = "/api/v1/transfers/" + String(id);
-      const data = { 'action': action };
+      const data = { 'action': action, 'userId': userId, 'newFacultyId': newFacultyId };
 
       console.log("fx");
 
@@ -70,7 +70,7 @@
           <td>{{firstName}}</td>
           <td>{{oldfaculty}}</td>
           <td>{{faculty}}</td>
-          <td><input id="accept" name="accept" type="button" value="accept" onclick="update({{tid}}, 'accepted' )"
+          <td><input id="accept" name="accept" type="button" value="accept" onclick="update({{tid}}, 'accepted', {{userId}}, {{newFacultyId}} )"
               class="btn btn-primary"></td>
           <td><input id="reject" name="reject" type="button" value="reject" onclick="update({{tid}}, 'rejected' )"
               class="btn btn-primary"></td>

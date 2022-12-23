@@ -35,7 +35,7 @@ module.exports = function (app) {
     };
     try {
       const course = await db('se_project.transfer_requests').insert(newrequest);
-      return res.status(200).json(course);
+      return res.status(200).send("request added");
     } catch (e) {
       console.log(e.message);
       return res.status(400).send("Could not add request");
@@ -47,10 +47,13 @@ module.exports = function (app) {
       const update = await db('se_project.transfer_requests')
         .where('tid', req.params.transferId)
         .update('status', req.body.action);
-      return res.status(200).json(update);
+        const transfer = await db('se_project.users')
+        .where('uid',req.body.userId)
+        .update('facultyId', req.body.newFacultyId);
+      return res.status(200).send("request accepted");
     } catch (e) {
       console.log(e);
-      res.send("do not exist");
+      res.send("request rejected");
       return res.status(400);
     };
   });
