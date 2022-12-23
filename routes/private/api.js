@@ -78,16 +78,18 @@ app.get('/api/v1/enrollment/:courseId', async function(req, res) {
   }
 });
 app.put('/api/v1/enrollment/:courseId', async function(req, res) {
-  const courseGrades = req.body.courseGrades;
+  const courseGrades = req.body.grades;
+  console.log('fffffffffffffff')
+  console.log(courseGrades)
   try {
     for ( const record in courseGrades ) {
       console.log(record);
-    const course = await db('se_project.enrollments')
-    .where('courseId',req.params.courseId)
-    .where('userId', record.userId)
-    .update('grade', record.grade);
-  }
-    return res.status(200).json(course);
+      const course = await db('se_project.enrollments')
+      .where('courseId',req.params.courseId)
+      .where('userId', record.userId)
+      .update('grade', record.grade);
+    };
+    return res.status(200);
   } catch(e){
       console.log(e);
       res.send("do not exist");
@@ -97,11 +99,10 @@ app.put('/api/v1/enrollment/:courseId', async function(req, res) {
 
 app.get('/api/v1/faculties/:facultyId', async function(req, res) {
   console.log("api")
-   const d =req.params.facultyId;
-    console.log(d)
+   
 
   try {
-    const courses = await db.select('*').from('se_project.courses').where('facultyId', d);
+    const courses = await db.select('*').from('se_project.courses').where('facultyId', req.params.facultyId);
     return res.status(200).json(courses);
   } catch (e) {
     console.log(e.message);

@@ -33,28 +33,27 @@
             })
             };
           
-          $(document).ready(function(){
-      // Handle Autocomplete Selection Change
-      $(".dropdown-menu li a").click(function(){
-        const index = $(this).attr('index');
-        $("#facultyDropdown").attr('index', index);
-        $("#facultyDropdown").text($(this).text());
+        $(document).ready(function () {
+          // Handle Autocomplete Selection Change
+          $(".dropdown-menu li a").click(function () {
+            const index = $(this).attr('index');
+            $("#facultyDropdown").attr('index', index);
+            $("#facultyDropdown").text($(this).text());
             const d = index;
-             const _url = "/api/v1/faculties/" + String(index)
+            const _url = "/api/v1/faculties/" + String(index);
+            console.log(String(index));
             $.ajax({
               type: "GET",
               url: _url,
               d,
               success: function (serverResponse) {
                 if (serverResponse) {
-                  alert(JSON.stringify(serverResponse));
+                  window.location.href = "/manage/courses?facultyId="+String(index);
                 }
               }
             });
           });
-          });
-         
-         
+        });
 
     </script>
 
@@ -85,29 +84,9 @@
     {{/isStudent}}
   </div>
     <br/>
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Course Code</th>
-            <th scope="col">Course Name</th>
-            <th scope="col">Credit Hours</th>
-          </tr>
-          
-          {{#courses}}
-            <tr>
-              <td>{{code}}</td>
-              <td>{{course}}</td>
-              <td>{{credit hours}}</td>
-              <td><input id="delete" name="delete" type="button" value="delete" onclick="Delete({{id}})" class="btn btn-primary"></td>
-              <td><input id="update" name="update" type="button" value="update" onclick="Update({{id}})" class="btn btn-primary"></td>
-            </tr>
-          {{/courses}}
-         
-        </thead>
-      </table>
-            <div class="form-group">
-          <label for="faculty" class="col-sm-2 control-label">Faculty</label>
-          <div class="col-sm-10">
+                <div class="form-group">
+            <label for="faculty" class="col-sm-2 control-label">Faculty</label>
+           <div class="col-sm-10">
             <div class="btn-group">
               <button index=0 id='facultyDropdown' class="btn">Faculties</button>
               <button class="btn dropdown-toggle" data-toggle="dropdown">
@@ -121,6 +100,29 @@
             </div>
           </div>
       </div>
+    {{#facultyId}}
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Course Code</th>
+            <th scope="col">Course Name</th>
+            <th scope="col">Credit Hours</th>
+          </tr>
+          
+          {{#course}}
+            <tr>
+              <td>{{code}}</td>
+              <td>{{course}}</td>
+              <td>{{credit hours}}</td>
+              <td><input id="delete" name="delete" type="button" value="delete" onclick="Delete({{id}})" class="btn btn-primary"></td>
+              <td><input id="update" name="update" type="button" value="update" onclick="Update({{id}})" class="btn btn-primary"></td>
+            </tr>
+          {{/course}}
+         
+        </thead>
+      </table>
+
     </div>
+    {{/facultyId}}
   </body>
   </html>

@@ -367,6 +367,11 @@
   dependencies:
     "daemon" ">=0.3.0"
 
+"inner-join@^4.0.0":
+  "integrity" "sha512-/30BGN4uI9DgH1BkbkT4fuHMCl3NYt/Nj0UfVYFZi8SECFE60IdXE1PvHYsa1cITicVNsVoZAtZ6FhrXIjBwjg=="
+  "resolved" "https://registry.npmjs.org/inner-join/-/inner-join-4.0.0.tgz"
+  "version" "4.0.0"
+
 "interpret@^2.2.0":
   "integrity" "sha512-Ju0Bz/cEia55xDwUWEa8+olFpCiQoypjnQySseKtmjNrnps3P+xfpUmGr90T7yjlVJmOtybRvPXhKMbHr+fWnw=="
   "resolved" "https://registry.npmjs.org/interpret/-/interpret-2.2.0.tgz"
