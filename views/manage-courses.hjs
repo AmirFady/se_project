@@ -121,7 +121,6 @@
               class="btn btn-primary"></td>
         </tr>
         {{/course}}
-
       </thead>
     </table>
 

@@ -11,8 +11,6 @@
 
 
 <body>
-  <script>
-  </script>
   <div>
     <div>
       {{#isAdmin}}
@@ -47,7 +45,6 @@
           <th scope="col">Course Name</th>
           <th scope="col">Credit Hours</th>
           <th scope="col">Grade</th>
-          <th scope="col">GPA: </th>
         </tr>
         {{#enrollment}}
         <tr>
@@ -56,7 +53,20 @@
           <td>{{credit hours}}</td>
           <td>{{grade}}</td>
           {{/enrollment}}
+
+
+
         </tr>
+
+        <tr>
+          <th>
+            GPA:
+          </th>
+        </tr>
+        <td>
+          {{gpa}}
+        </td>
+
       </thead>
     </table>
   </div>
