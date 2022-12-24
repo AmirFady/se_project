@@ -20,7 +20,6 @@
     function Delete(courseId) {
       const api_url = "/api/v1/courses/" + String(courseId)
       const data = { 'courseId': courseId };
-      console.log(data);
       $.ajax({
         type: "DELETE",
         url: api_url,
@@ -42,7 +41,6 @@
         $("#facultyDropdown").text($(this).text());
         const d = index;
         const _url = "/api/v1/faculties/" + String(index);
-        console.log(String(index));
         $.ajax({
           type: "GET",
           url: _url,

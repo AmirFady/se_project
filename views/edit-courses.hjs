@@ -23,7 +23,6 @@
                 name,
                 hours,
             };
-            console.log(data);
             const api_url = "/api/v1/courses/" + String(cid)
             $.ajax({
                 type: "PUT",

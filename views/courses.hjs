@@ -14,7 +14,6 @@
     function drop(Cid, uid) {
       api_url = "/api/v1/courses/" + String(Cid) + "/drop"
       const data = { 'userId': uid };
-      console.log(data);
       $.ajax({
         type: "PUT",
         url: api_url,
@@ -22,7 +21,6 @@
         success: function (serverResponse) {
           if (serverResponse) {
             alert(JSON.stringify(serverResponse));
-            console.log("rld");
             location.reload();
           }
         }

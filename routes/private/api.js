@@ -11,7 +11,6 @@ module.exports = function (app) {
         .where('courseId', req.params.courseId)
         .where('userId', req.body.userId)
         .update('active', false);
-      console.log(course);
       return res.status(200).send('dropped');
     } catch (e) {
       console.log(e);
@@ -47,8 +46,8 @@ module.exports = function (app) {
       const update = await db('se_project.transfer_requests')
         .where('tid', req.params.transferId)
         .update('status', req.body.action);
-        const transfer = await db('se_project.users')
-        .where('uid',req.body.userId)
+      const transfer = await db('se_project.users')
+        .where('uid', req.body.userId)
         .update('facultyId', req.body.newFacultyId);
       return res.status(200).send("request accepted");
     } catch (e) {

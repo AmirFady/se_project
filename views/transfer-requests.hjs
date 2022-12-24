@@ -1,111 +1,116 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Users</title>
-    <link rel='stylesheet' href='/styles/bootstrap.min.css' />
-    <link rel='stylesheet' href='/styles/style.css' />
-    <script src="/js/jquery-2.2.0.min.js" type="text/javascript"></script>
-    <script src="/js/bootstrap.min.js" type="text/javascript"></script>
-  </head>
-  <body>
 
-        {{#isAdmin}}
-        <nav class="navbar navbar-inverse" style="padding-left:130px;">
-          <ul class="nav navbar-nav">
-            <li><a href="/dashboard">Home</a></li>
-            <li><a href="/manage/grades">Manage Grades</a></li>
-            <li><a href="/manage/courses">Manage Courses</a></li>
-            <li><a href="/manage/transfers">Manage Requests</a></li>
-            <li><a href="/">Logout</a></li>
-          </ul>
-       </nav>
-    {{/isAdmin}}
+<head>
+  <title>Users</title>
+  <link rel='stylesheet' href='/styles/bootstrap.min.css' />
+  <link rel='stylesheet' href='/styles/style.css' />
+  <script src="/js/jquery-2.2.0.min.js" type="text/javascript"></script>
+  <script src="/js/bootstrap.min.js" type="text/javascript"></script>
+</head>
 
-    {{#isStudent}}
-        <nav class="navbar navbar-inverse" style="padding-left:130px;">
-          <ul class="nav navbar-nav">
-            <li><a href="/dashboard">Home</a></li>
-            <li><a href="/transcripts">Transcripts</a></li>
-            <li><a href="/courses">Courses</a></li>
-            <li><a href="/transfer">transfer requests</a></li>
-            <li><a href="/">Logout</a></li>
-          </ul>
-       </nav>
-    {{/isStudent}}
-        <script>
-    $(document).ready(function(){
-      $("#submit").click(function() {
-        const userId = {{uid}};
-        const currentFacultyId = {{facultyId}};
-        const newFacultyId = $('#faculties').val();
-            
-        const data = {
-          userId,
-          currentFacultyId,
-          newFacultyId,
-        };
+<body>
 
-        $.ajax({
-          type: "POST",
-          url: '/api/v1/faculties/transfer',
-          data,
-          success: function(serverResponse){
-            if(serverResponse) {
-              alert(JSON.stringify(serverResponse));
-              location.reload();
+  {{#isAdmin}}
+  <nav class="navbar navbar-inverse" style="padding-left:130px;">
+    <ul class="nav navbar-nav">
+      <li><a href="/dashboard">Home</a></li>
+      <li><a href="/manage/grades">Manage Grades</a></li>
+      <li><a href="/manage/courses">Manage Courses</a></li>
+      <li><a href="/manage/transfers">Manage Requests</a></li>
+      <li><a href="/">Logout</a></li>
+    </ul>
+  </nav>
+  {{/isAdmin}}
 
-            }
-          },
-          error: function(serverResponse){
-              if(serverResponse) {
-              alert(JSON.stringify(serverResponse));
-            }
-          }
-        });
+  {{#isStudent}}
+  <nav class="navbar navbar-inverse" style="padding-left:130px;">
+    <ul class="nav navbar-nav">
+      <li><a href="/dashboard">Home</a></li>
+      <li><a href="/transcripts">Transcripts</a></li>
+      <li><a href="/courses">Courses</a></li>
+      <li><a href="/transfer">transfer requests</a></li>
+      <li><a href="/">Logout</a></li>
+    </ul>
+  </nav>
+  {{/isStudent}}
+  <script>
+    $(document).ready(function () {
+      $("#submit").click(function () {
+        const userId = {{ uid }
+      };
+      const currentFacultyId = {{ facultyId }
+    };
+    const newFacultyId = $('#faculties').val();
+
+    const data = {
+      userId,
+      currentFacultyId,
+      newFacultyId,
+    };
+
+    $.ajax({
+      type: "POST",
+      url: '/api/v1/faculties/transfer',
+      data,
+      success: function (serverResponse) {
+        if (serverResponse) {
+          alert(JSON.stringify(serverResponse));
+          location.reload();
+
+        }
+      },
+      error: function (serverResponse) {
+        if (serverResponse) {
+          alert(JSON.stringify(serverResponse));
+        }
+      }
+    });
       });
     });
-    </script>
-    <div>
-    <br/>
+  </script>
+  <div>
+    <br />
     {{#requests.length}}
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Request ID</th>
-            <th scope="col">Old Faculty</th>
-            <th scope="col">New Faculty</th>
-            <th scope="col">status</th>
-          </tr>
-          {{#requests}}
-            <tr>
-              <td>{{tid}}</td>
-              <td>{{currentFacultyId}}</td>
-              <td>{{faculty}}</td>
-              <td>{{status}}</td>
-            </tr>
-          {{/requests}}
-        </thead>
-      </table>
-     {{/requests.length}}
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Request ID</th>
+          <th scope="col">Old Faculty</th>
+          <th scope="col">New Faculty</th>
+          <th scope="col">status</th>
+        </tr>
+        {{#requests}}
+        <tr>
+          <td>{{tid}}</td>
+          <td>{{currentFacultyId}}</td>
+          <td>{{faculty}}</td>
+          <td>{{status}}</td>
+        </tr>
+        {{/requests}}
+      </thead>
+    </table>
+    {{/requests.length}}
 
-      {{^pendingrequest.length}}
+    {{^pendingrequest.length}}
 
-      <div class="form-group">
-          <label for="faculty" class="col-sm-2 control-label">Faculty</label>
-          <div class="col-sm-10">
-            <div class="btn-group">
-              <select name="faculties" id="faculties">
-                  {{#faculties}}
-                     <option value="{{fid}}">{{faculty}}</option>
-                  {{/faculties}}
-              </select>            
-            </div>
-          </div>
+    <div class="form-group">
+      <label for="faculty" class="col-sm-2 control-label">Faculty</label>
+      <div class="col-sm-10">
+        <div class="btn-group">
+          <select name="faculties" id="faculties">
+            {{#faculties}}
+            <option value="{{fid}}">{{faculty}}</option>
+            {{/faculties}}
+          </select>
+        </div>
       </div>
-      <input id="submit" name="submit" type="button" value="submit" class="btn btn-primary">
-      {{/pendingrequest.length}}
-
     </div>
-  
-  </body>
-  </html>
+    <input id="submit" name="submit" type="button" value="submit" class="btn btn-primary">
+    {{/pendingrequest.length}}
+
+  </div>
+
+</body>
+
+</html>

@@ -37,66 +37,65 @@ module.exports = function (app) {
       .from('se_project.enrollments')
       .where('userId', user.uid)
       .innerJoin('se_project.courses', 'se_project.enrollments.courseId', 'se_project.courses.cid');
-      const gr = await db.select('grade','credit hours as cr')
+    const gr = await db.select('grade', 'credit hours as cr')
       .from('se_project.enrollments')
       .where('userId', user.uid)
       .innerJoin('se_project.courses', 'se_project.enrollments.courseId', 'se_project.courses.cid');
-     var a = 0;
-     var c = 0;
-      for(let i = 0; i < gr.length; i++){
-    
-        if(gr[i].grade=='A+'){
-          c += gr[i].cr;
-          a += 0.7*gr[i].cr;
-        }
-        else if(gr[i].grade=='A'){
-          c += gr[i].cr;
-          a += 1*gr[i].cr;
-        }
-        else if(gr[i].grade=='A-'){
-          c += gr[i].cr;
-          a += 1.3*gr[i].cr;
-        }
-        else if(gr[i].grade=='B+'){
-          c += gr[i].cr;
-          a += 1.7*gr[i].cr;
-        }
-        else if(gr[i].grade=='B'){
-          c += gr[i].cr;
-          a += 2*gr[i].cr;
-        }
-        else if(gr[i].grade=='B-'){
-          c += gr[i].cr;
-          a += 2.3*gr[i].cr;
-        }
-        else if(gr[i].grade=='C+'){
-          c += gr[i].cr;
-          a += 2.7*gr[i].cr;
-        }
-        else if(gr[i].grade=='C'){
-          c += gr[i].cr;
-          a += 3*gr[i].cr;
-        }
-        else if(gr[i].grade=='C-'){
-          c += gr[i].cr;
-          a += 3.3*gr[i].cr;
-        }
-        else if(gr[i].grade=='D+'){
-          c += gr[i].cr;
-          a += 3.7*gr[i].cr;
-        }
-        else if(gr[i].grade=='D'){
-          c += gr[i].cr;
-          a += 4*gr[i].cr;
-        }
-        else if(gr[i].grade=='F'){
-          c += gr[i].cr;
-          a += 5*gr[i].cr;
-        }
+    var a = 0;
+    var c = 0;
+    for (let i = 0; i < gr.length; i++) {
+
+      if (gr[i].grade == 'A+') {
+        c += gr[i].cr;
+        a += 0.7 * gr[i].cr;
       }
-      var gpa = a/c ;
-      gpa=Number(gpa).toFixed(2);
-      console.log(gpa);
+      else if (gr[i].grade == 'A') {
+        c += gr[i].cr;
+        a += 1 * gr[i].cr;
+      }
+      else if (gr[i].grade == 'A-') {
+        c += gr[i].cr;
+        a += 1.3 * gr[i].cr;
+      }
+      else if (gr[i].grade == 'B+') {
+        c += gr[i].cr;
+        a += 1.7 * gr[i].cr;
+      }
+      else if (gr[i].grade == 'B') {
+        c += gr[i].cr;
+        a += 2 * gr[i].cr;
+      }
+      else if (gr[i].grade == 'B-') {
+        c += gr[i].cr;
+        a += 2.3 * gr[i].cr;
+      }
+      else if (gr[i].grade == 'C+') {
+        c += gr[i].cr;
+        a += 2.7 * gr[i].cr;
+      }
+      else if (gr[i].grade == 'C') {
+        c += gr[i].cr;
+        a += 3 * gr[i].cr;
+      }
+      else if (gr[i].grade == 'C-') {
+        c += gr[i].cr;
+        a += 3.3 * gr[i].cr;
+      }
+      else if (gr[i].grade == 'D+') {
+        c += gr[i].cr;
+        a += 3.7 * gr[i].cr;
+      }
+      else if (gr[i].grade == 'D') {
+        c += gr[i].cr;
+        a += 4 * gr[i].cr;
+      }
+      else if (gr[i].grade == 'F') {
+        c += gr[i].cr;
+        a += 5 * gr[i].cr;
+      }
+    }
+    var gpa = a / c;
+    gpa = Number(gpa).toFixed(2);
     return res.render('transcripts', { ...user, enrollment, gpa });
   });
 
@@ -110,7 +109,7 @@ module.exports = function (app) {
       .innerJoin('se_project.faculties', 'se_project.faculties.fid', 'se_project.transfer_requests.newFacultyId');
     const requests = await db.select('*')
       .from('se_project.transfer_requests')
-      .where('userId',user.uid)
+      .where('userId', user.uid)
       .innerJoin('se_project.faculties', 'se_project.faculties.fid', 'se_project.transfer_requests.newFacultyId');
     return res.render('transfer-requests', { ...user, requests, faculties, pendingrequest });
   });

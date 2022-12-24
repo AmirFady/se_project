@@ -67,8 +67,8 @@
           <td>{{of}}</td>
           <td>{{nf}} </td>
           <td>{{request_date}}</td>
-          <td><input id="accept" name="accept" type="button" value="accept" onclick="update({{tid}}, 'accepted', {{userId}}, {{newFacultyId}} )"
-              class="btn btn-primary"></td>
+          <td><input id="accept" name="accept" type="button" value="accept"
+              onclick="update({{tid}}, 'accepted', {{userId}}, {{newFacultyId}} )" class="btn btn-primary"></td>
           <td><input id="reject" name="reject" type="button" value="reject" onclick="update({{tid}}, 'rejected' )"
               class="btn btn-primary"></td>
         </tr>
