@@ -36,10 +36,12 @@ module.exports = function (app) {
     const enrollment = await db.select('*')
       .from('se_project.enrollments')
       .where('userId', user.uid)
+     // .where('active',true)
       .innerJoin('se_project.courses', 'se_project.enrollments.courseId', 'se_project.courses.cid');
     const gr = await db.select('grade', 'credit hours as cr')
       .from('se_project.enrollments')
       .where('userId', user.uid)
+    // .where('active',true)
       .innerJoin('se_project.courses', 'se_project.enrollments.courseId', 'se_project.courses.cid');
     var a = 0;
     var c = 0;

@@ -94,11 +94,15 @@ module.exports = function (app) {
 
   app.delete('/api/v1/courses/:courseId', async function (req, res) {
     try {
-      const courses = await db.select('*')
+      const deletecourses = await db.select('*')
         .from('se_project.courses')
         .where('cid', req.body.courseId)
-        .delete("courses");
-      return res.status(200).json(courses);
+        .delete("cid");
+        const deleteenrollments = await db.select('*')
+        .from('se_project.enrollments')
+        .where('courseId', req.body.courseId)
+        .delete("courseId");
+      return res.status(200).json(deletecourses);
     } catch (e) {
       console.log(e.message);
       return res.status(400).send("Could not delete course");
