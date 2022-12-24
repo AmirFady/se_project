@@ -110,7 +110,7 @@
       {{#enrollment}}
       <tr>
         <td>{{userId}}</td>
-        <td>{{firstName}}</td>
+        <td>{{firstName}} {{lastName}}</td>
         <td><input type="text" class="form-control" id="{{userId}}" name="grade" placeholder="grade" value="{{grade}}">
         </td>
       </tr>
