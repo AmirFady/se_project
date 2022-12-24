@@ -13,7 +13,6 @@
 
 <body>
     <script>
-        
         function Update(cid) {
             const code = $('#code').val();
             const name = $('#name').val();

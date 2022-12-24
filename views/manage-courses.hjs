@@ -11,13 +11,11 @@
 
 <body>
   <script>
-
-
-    console.log("script");
-    function Update(courseId) {
+    function Update(courseId, facultyId) {
 
       const url = "/manage/courses/edit?courseId=" + String(courseId);
       window.location.href = url;
+
     };
     function Delete(courseId) {
       const api_url = "/api/v1/courses/" + String(courseId)
@@ -119,7 +117,7 @@
           <td>{{credit hours}}</td>
           <td><input id="delete" name="delete" type="button" value="delete" onclick="Delete({{cid}})"
               class="btn btn-primary"></td>
-          <td><input id="update" name="update" type="button" value="update" onclick="Update({{cid}})"
+          <td><input id="update" name="update" type="button" value="update" onclick="Update({{cid}},{{fid}})"
               class="btn btn-primary"></td>
         </tr>
         {{/course}}

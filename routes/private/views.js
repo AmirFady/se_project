@@ -111,11 +111,9 @@ module.exports = function (app) {
     const user = await getUser(req);
     const course = await db.select('*')
       .from('se_project.courses')
-      .where("cid", courseId);
-    const faculty = await db.select('faculty')
-      .from('se_project.faculties')
-      console.log(faculty);
-    return res.render('edit-courses', { ...user, course, faculty });
+      .where("cid", courseId)
+      .innerJoin('se_project.faculties', 'se_project.courses.facultyId', 'se_project.faculties.fid');
+    return res.render('edit-courses', { ...user, course });
   });
 
 };
