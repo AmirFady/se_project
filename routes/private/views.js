@@ -126,13 +126,16 @@ module.exports = function (app) {
 
   app.get('/manage/transfers', async function (req, res) {
     const user = await getUser(req);
-    const requests = await db.select('tr.userId', 'se_project.users.firstName', 'se_project.users.lastName', 'newFac.faculty as nf', 'oldFac.faculty as of', 'tr.status', 'tr.request_date')
+    const requests = await db.select('*','tr.userId', 'se_project.users.firstName', 'se_project.users.lastName', 'newFac.faculty as nf', 'oldFac.faculty as of', 'tr.status', 'tr.request_date')
       .from('se_project.transfer_requests as tr')
       .where('status', "pending")
       .innerJoin('se_project.users', 'se_project.users.uid', 'tr.userId')
       .innerJoin('se_project.faculties as newFac', 'newFac.fid', 'tr.newFacultyId',)
       .innerJoin('se_project.faculties as oldFac', 'oldFac.fid', 'tr.currentFacultyId',);
-    return res.render('manage-requests', { requests, user });
+      const r = await db.select('*')
+      .from('se_project.transfer_requests')
+      .where('status', "pending");
+    return res.render('manage-requests', { requests, user, r });
   });
 
   app.get('/manage/grades', async function (req, res) {
