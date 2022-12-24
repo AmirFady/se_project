@@ -31,76 +31,6 @@ module.exports = function (app) {
     return res.render('dashboard', user);
   });
 
-  app.get('/transcripts', async function (req, res) {
-    const user = await getUser(req);
-    const enrollment = await db.select('*')
-      .from('se_project.enrollments')
-      .where('userId', user.uid)
-     // .where('active',true)
-      .innerJoin('se_project.courses', 'se_project.enrollments.courseId', 'se_project.courses.cid');
-    const gr = await db.select('grade', 'credit hours as cr')
-      .from('se_project.enrollments')
-      .where('userId', user.uid)
-    // .where('active',true)
-      .innerJoin('se_project.courses', 'se_project.enrollments.courseId', 'se_project.courses.cid');
-    var a = 0;
-    var c = 0;
-    for (let i = 0; i < gr.length; i++) {
-
-      if (gr[i].grade == 'A+') {
-        c += gr[i].cr;
-        a += 0.7 * gr[i].cr;
-      }
-      else if (gr[i].grade == 'A') {
-        c += gr[i].cr;
-        a += 1 * gr[i].cr;
-      }
-      else if (gr[i].grade == 'A-') {
-        c += gr[i].cr;
-        a += 1.3 * gr[i].cr;
-      }
-      else if (gr[i].grade == 'B+') {
-        c += gr[i].cr;
-        a += 1.7 * gr[i].cr;
-      }
-      else if (gr[i].grade == 'B') {
-        c += gr[i].cr;
-        a += 2 * gr[i].cr;
-      }
-      else if (gr[i].grade == 'B-') {
-        c += gr[i].cr;
-        a += 2.3 * gr[i].cr;
-      }
-      else if (gr[i].grade == 'C+') {
-        c += gr[i].cr;
-        a += 2.7 * gr[i].cr;
-      }
-      else if (gr[i].grade == 'C') {
-        c += gr[i].cr;
-        a += 3 * gr[i].cr;
-      }
-      else if (gr[i].grade == 'C-') {
-        c += gr[i].cr;
-        a += 3.3 * gr[i].cr;
-      }
-      else if (gr[i].grade == 'D+') {
-        c += gr[i].cr;
-        a += 3.7 * gr[i].cr;
-      }
-      else if (gr[i].grade == 'D') {
-        c += gr[i].cr;
-        a += 4 * gr[i].cr;
-      }
-      else if (gr[i].grade == 'F') {
-        c += gr[i].cr;
-        a += 5 * gr[i].cr;
-      }
-    }
-    var gpa = a / c;
-    gpa = Number(gpa).toFixed(2);
-    return res.render('transcripts', { ...user, enrollment, gpa });
-  });
-
   app.get('/transfer', async function (req, res) {
     const user = await getUser(req);
     const faculties = await db.select('*')
@@ -175,6 +105,76 @@ module.exports = function (app) {
       .where("cid", courseId)
       .innerJoin('se_project.faculties', 'se_project.courses.facultyId', 'se_project.faculties.fid');
     return res.render('edit-courses', { ...user, course });
+  });
+
+  app.get('/transcripts', async function (req, res) {
+    const user = await getUser(req);
+    const enrollment = await db.select('*')
+      .from('se_project.enrollments')
+      .where('userId', user.uid)
+     // .where('active',true)
+      .innerJoin('se_project.courses', 'se_project.enrollments.courseId', 'se_project.courses.cid');
+    const gr = await db.select('grade', 'credit hours as cr')
+      .from('se_project.enrollments')
+      .where('userId', user.uid)
+    // .where('active',true)
+      .innerJoin('se_project.courses', 'se_project.enrollments.courseId', 'se_project.courses.cid');
+    var a = 0;
+    var c = 0;
+    for (let i = 0; i < gr.length; i++) {
+
+      if (gr[i].grade == 'A+') {
+        c += gr[i].cr;
+        a += 0.7 * gr[i].cr;
+      }
+      else if (gr[i].grade == 'A') {
+        c += gr[i].cr;
+        a += 1 * gr[i].cr;
+      }
+      else if (gr[i].grade == 'A-') {
+        c += gr[i].cr;
+        a += 1.3 * gr[i].cr;
+      }
+      else if (gr[i].grade == 'B+') {
+        c += gr[i].cr;
+        a += 1.7 * gr[i].cr;
+      }
+      else if (gr[i].grade == 'B') {
+        c += gr[i].cr;
+        a += 2 * gr[i].cr;
+      }
+      else if (gr[i].grade == 'B-') {
+        c += gr[i].cr;
+        a += 2.3 * gr[i].cr;
+      }
+      else if (gr[i].grade == 'C+') {
+        c += gr[i].cr;
+        a += 2.7 * gr[i].cr;
+      }
+      else if (gr[i].grade == 'C') {
+        c += gr[i].cr;
+        a += 3 * gr[i].cr;
+      }
+      else if (gr[i].grade == 'C-') {
+        c += gr[i].cr;
+        a += 3.3 * gr[i].cr;
+      }
+      else if (gr[i].grade == 'D+') {
+        c += gr[i].cr;
+        a += 3.7 * gr[i].cr;
+      }
+      else if (gr[i].grade == 'D') {
+        c += gr[i].cr;
+        a += 4 * gr[i].cr;
+      }
+      else if (gr[i].grade == 'F') {
+        c += gr[i].cr;
+        a += 5 * gr[i].cr;
+      }
+    }
+    var gpa = a / c;
+    gpa = Number(gpa).toFixed(2);
+    return res.render('transcripts', { ...user, enrollment, gpa });
   });
 
 };
