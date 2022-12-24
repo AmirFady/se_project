@@ -12,19 +12,16 @@
 <body>
   <script>
     function update() {
-      console.log("clicked");
       const gradeElements = document.getElementsByName("grade");
       const grades = [];
       gradeElements.forEach(
         function (node, index) {
-          //console.log(gradeElement);
           grade = node.value;
           userId = node.id;
           data = {
             'userId': userId,
             'grade': grade
           }
-          console.log(data);
           const url = "/api/v1/enrollment/" + String({{ courseId }});
       $.ajax({
         type: "PUT",
@@ -32,11 +29,11 @@
         data,
         success: function (serverResponse) {
           if (serverResponse) {
-            window.location.href = "/manage/grades?courseId=" + String({{ courseId }});
-    }
-             }
+            location.reload(true);
+          }
+        }
+      });
           });
-        });
         };
 
     $(document).ready(function () {
@@ -47,7 +44,6 @@
         $("#courseDropdown").text($(this).text());
         const d = index;
         const _url = "/api/v1/enrollment/" + String(index);
-        console.log(String(index));
         $.ajax({
           type: "GET",
           url: _url,
@@ -97,7 +93,7 @@
         </button>
         <ul class="dropdown-menu">
           {{#courses}}
-          <li><a index="{{cid}}">{{course}}</a></li>
+          <li><a index="{{cid}}">{{code}}</a></li>
           {{/courses}}
         </ul>
       </div>

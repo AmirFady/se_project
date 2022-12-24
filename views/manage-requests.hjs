@@ -24,14 +24,9 @@
 
   <script>
 
-    console.log("script");
-
     function update(id, action, userId, newFacultyId) {
       const api_url = "/api/v1/transfers/" + String(id);
       const data = { 'action': action, 'userId': userId, 'newFacultyId': newFacultyId };
-
-      console.log("fx");
-
       $.ajax({
         type: "POST",
         url: api_url,
@@ -62,14 +57,16 @@
           <th scope="col">name</th>
           <th scope="col">Old Faculty</th>
           <th scope="col">New Faculty</th>
+          <th scope="col">Date</th>
         </tr>
 
         {{#requests}}
         <tr>
           <td>{{userId}}</td>
           <td>{{firstName}}</td>
-          <td>{{oldfaculty}}</td>
-          <td>{{faculty}}</td>
+          <td>{{currentFacultyId}}</td>
+          <td> {{faculty}} </td>
+          <td>{{request_date}}</td>
           <td><input id="accept" name="accept" type="button" value="accept" onclick="update({{tid}}, 'accepted', {{userId}}, {{newFacultyId}} )"
               class="btn btn-primary"></td>
           <td><input id="reject" name="reject" type="button" value="reject" onclick="update({{tid}}, 'rejected' )"

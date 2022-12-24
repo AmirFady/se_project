@@ -111,8 +111,9 @@ module.exports = function (app) {
     const course = await db.select('*')
       .from('se_project.courses')
       .where("cid", courseId);
-    const faculty = await db.select('*')
-      .from('se_project.faculties');
+    const faculty = await db.select('faculty')
+      .from('se_project.faculties')
+      console.log(faculty);
     return res.render('edit-courses', { ...user, course, faculty });
   });
 

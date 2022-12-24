@@ -74,10 +74,10 @@ module.exports = function (app) {
         .where('courseId', req.params.courseId)
         .where('userId', req.body.userId)
         .update('grade', req.body.grade);
-      return res.status(200);
+      return res.status(200).alert("successfully updated grades");
     } catch (e) {
       console.log(e);
-      res.send("could not update");
+      res.send("could not update grades");
     };
   });
 
