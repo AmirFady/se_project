@@ -9,8 +9,8 @@ const config = {
   connection: {
     host: 'amir.astroman.dev',
     port: 5432,
-    user: 'shams',
-    password: 'root',
+    user: 'root',
+    password: 'saras',
     database: 'postgres',
   }
 };
