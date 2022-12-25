@@ -2,6 +2,7 @@ const { v4 } = require('uuid');
 const { isEmpty } = require('lodash');
 const db = require('../../connectors/db');
 const roles = require('../../constants/roles');
+const innerJoin = require('inner-join');
 
 module.exports = function (app) {
 
@@ -76,7 +77,8 @@ module.exports = function (app) {
 
   app.get('/api/v1/enrollment/:courseId', async function (req, res) {
     try {
-      const enrollment = await db.select('*').from('se_project.enrollments').where('courseId', req.params.courseId);
+      const enrollment = await db.select('*').from('se_project.enrollments').where('courseId', req.params.courseId)
+      .innerJoin('se_project.users', 'se_project.enrollments.userId', 'se_project.users.uid');
       return res.status(200).json(enrollment);
     } catch (e) {
       console.log(e.message);

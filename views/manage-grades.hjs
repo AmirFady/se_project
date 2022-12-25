@@ -10,53 +10,56 @@
 </head>
 
 <body>
-      {{#isAdmin}}
+  {{#isAdmin}}
   <script>
-    function update() {
-      const gradeElements = document.getElementsByName("grade");
-      const grades = [];
-      gradeElements.forEach(
-        function (node, index) {
-          grade = node.value;
-          userId = node.id;
-          data = {
-            'userId': userId,
-            'grade': grade
-          }
-          const url = "/api/v1/enrollment/" + String({{ courseId }});
-      $.ajax({
-        type: "PUT",
-        url: url,
-        data,
-        success: function (serverResponse) {
-          if (serverResponse) {
-            location.reload(true);
-          }
-        }
-      });
-    });
-        };
-
-    $(document).ready(function () {
-      // Handle Autocomplete Selection Change
-      $(".dropdown-menu li a").click(function () {
-        const index = $(this).attr('index');
-        $("#courseDropdown").attr('index', index);
-        $("#courseDropdown").text($(this).text());
-        const d = index;
-        const _url = "/api/v1/enrollment/" + String(index);
-        $.ajax({
-          type: "GET",
-          url: _url,
-          d,
-          success: function (serverResponse) {
-            if (serverResponse) {
-              window.location.href = "/manage/grades?courseId=" + String(index);
+      function update(courseid) {
+        const gradeElements = document.getElementsByName("grade");
+        const grades = [];
+        gradeElements.forEach(
+          function (node, index) {
+            grade = node.value;
+            userId = node.id;
+            data = {
+              'userId': userId,
+              'grade': grade
             }
-          }
+            const url = "/api/v1/enrollment/" + String(courseid);
+            $.ajax({
+              type: "PUT",
+              url: url,
+              data,
+              success: function (serverResponse) {
+                if (serverResponse) {
+                  
+                }
+              }
+            });
+          });
+          alert("successfully updated grades");
+      };
+      $(document).ready(function () {
+        // Handle Autocomplete Selection Change
+        $(".dropdown-menu li a").click(function () {
+          const index = $(this).attr('index');
+          $("#courseDropdown").attr('index', index);
+          $("#courseDropdown").text($(this).text());
+          const d = index;
+          const _url = "/api/v1/enrollment/" + String(index);
+          $.ajax({
+            type: "GET",
+            url: _url,
+            success: function (response) {
+              var trHTML = '<thead><tr><th scope="col">student id</th><th scope="col">student Name</th><th scope="col">grade</th></tr></thead>';
+              $.each(response, function (i, item) {
+                trHTML += '<tr><td>' + item.userId + '</td><td>' + item.firstName + "  " + item.lastName + '</td><td><input type="text" class="form-control" id=' + item.userId + ' name="grade" placeholder="grade" value=' + item.grade + '></td></tr>';
+              });
+              var divHTML = '<input id="update" name="update" type="button" value="update" class="btn btn-primary" onclick="update(' + index + ')">';
+              document.getElementById("enrollment").innerHTML = trHTML;
+              document.getElementById("updatebtn").innerHTML = divHTML;
+            }
+          });
         });
       });
-    });
   </script>
   <div>
 
@@ -89,29 +92,10 @@
       </div>
     </div>
   </div>
-  {{#courseId}}
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">student id</th>
-        <th scope="col">student Name</th>
-        <th scope="col">grade</th>
-      </tr>
-      {{#enrollment}}
-      <tr>
-        <td>{{userId}}</td>
-        <td>{{firstName}} {{lastName}}</td>
-        <td><input type="text" class="form-control" id="{{userId}}" name="grade" placeholder="grade" value="{{grade}}">
-        </td>
-      </tr>
-      {{/enrollment}}
-    </thead>
+  <table class="table" id="enrollment">
   </table>
-  <div>
-    <input id="update" name="update" type="button" value="update" class="btn btn-primary" onclick="update()">
-  </div>
-  {{/courseId}}
-      {{/isAdmin}}
+    <div id="updatebtn"></div>
+  {{/isAdmin}}
 </body>
 
 </html>
