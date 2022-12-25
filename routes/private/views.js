@@ -66,7 +66,7 @@ module.exports = function (app) {
       .innerJoin('se_project.users', 'se_project.users.uid', 'tr.userId')
       .innerJoin('se_project.faculties as newFac', 'newFac.fid', 'tr.newFacultyId',)
       .innerJoin('se_project.faculties as oldFac', 'oldFac.fid', 'tr.currentFacultyId',);
-    return res.render('manage-requests', { requests, user });
+    return res.render('manage-requests', { requests, ...user });
   });
 
   app.get('/manage/grades', async function (req, res) {

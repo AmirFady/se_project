@@ -10,7 +10,7 @@
 </head>
 
 <body>
-
+        {{#isAdmin}}
 
   <nav class="navbar navbar-inverse" style="padding-left:130px;">
     <ul class="nav navbar-nav">
@@ -82,6 +82,7 @@
       </thead>
     </table>
   </div>
+          {{/isAdmin}}
 </body>
 
 </html>
