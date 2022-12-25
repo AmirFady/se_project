@@ -41,7 +41,7 @@ module.exports = function (app) {
       .innerJoin('se_project.faculties', 'se_project.faculties.fid', 'se_project.transfer_requests.newFacultyId');
     const requests = await db.select('*', 'tr.userId', 'se_project.users.firstName', 'se_project.users.lastName', 'newFac.faculty as nf', 'oldFac.faculty as of', 'tr.status', 'tr.request_date')
       .from('se_project.transfer_requests as tr')
-      .where('status', "pending")
+      
       .innerJoin('se_project.users', 'se_project.users.uid', 'tr.userId')
       .innerJoin('se_project.faculties as newFac', 'newFac.fid', 'tr.newFacultyId',)
       .innerJoin('se_project.faculties as oldFac', 'oldFac.fid', 'tr.currentFacultyId',);
