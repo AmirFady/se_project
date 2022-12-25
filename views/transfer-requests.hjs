@@ -74,13 +74,15 @@
             <th scope="col">Request ID</th>
             <th scope="col">Old Faculty</th>
             <th scope="col">New Faculty</th>
+            <th scope="col">Date</th>
             <th scope="col">status</th>
           </tr>
           {{#requests}}
             <tr>
               <td>{{tid}}</td>
-              <td>{{currentFacultyId}}</td>
-              <td>{{faculty}}</td>
+              <td>{{of}}</td>
+              <td>{{nf}}</td>
+              <td>{{request_date}}</td>
               <td>{{status}}</td>
             </tr>
           {{/requests}}
