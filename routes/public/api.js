@@ -20,8 +20,21 @@ module.exports = function (app) {
       facultyId: req.body.facultyId,
       roleId: roles.student,
     };
+
     try {
       const user = await db('se_project.users').insert(newUser).returning('*');
+      console.log(user);
+      const courses = await db.select('cid')
+      .from('se_project.courses')
+      .where('facultyId', req.body.facultyId);
+      for(let i = 0; i < courses.length; i++){
+        const newenrollment = {
+          'userId': user[0].uid,
+          'courseId': courses[i].cid,
+          'active': true,
+        };
+        const Nuser = await db('se_project.enrollments').insert(newenrollment).returning('*');
+      }
       return res.status(200).json(user);
     } catch (e) {
       console.log(e.message);

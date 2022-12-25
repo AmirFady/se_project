@@ -49,6 +49,23 @@ module.exports = function (app) {
       const transfer = await db('se_project.users')
         .where('uid', req.body.userId)
         .update('facultyId', req.body.newFacultyId);
+
+      const courses = await db.select('cid')
+        .from('se_project.courses')
+        .where('facultyId', req.body.newFacultyId);
+      console.log(courses.length);
+
+      for (let i = 0; i < courses.length; i++) {
+        const newenrollment = {
+          'userId': req.body.userId,
+          'courseId': courses[i].cid,
+          'active': true,
+        };
+        const user = await db('se_project.enrollments').insert(newenrollment).returning('*');
+      }
+
+
+
       return res.status(200).send("request accepted");
     } catch (e) {
       console.log(e);
@@ -98,7 +115,7 @@ module.exports = function (app) {
         .from('se_project.courses')
         .where('cid', req.body.courseId)
         .delete("cid");
-        const deleteenrollments = await db.select('*')
+      const deleteenrollments = await db.select('*')
         .from('se_project.enrollments')
         .where('courseId', req.body.courseId)
         .delete("courseId");
