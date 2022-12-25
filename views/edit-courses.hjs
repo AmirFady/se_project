@@ -12,7 +12,7 @@
 </head>
 
 <body>
-            {{#isAdmin}}
+    {{#isAdmin}}
     <script>
         function Update(cid) {
             const code = $('#code').val();
@@ -82,7 +82,7 @@
             <label for="hours" class="col-sm-2 control-label">Credit Hours</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="hours" name="hours" placeholder="credit hours"
-                    value="{{credit hours}}">
+                    value="{{credithours}}">
             </div>
         </div>
 
@@ -102,7 +102,7 @@
     </form>
     {{/course}}
     </div>
-            {{/isAdmin}}
+    {{/isAdmin}}
 </body>
 
 </html>

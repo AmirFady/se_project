@@ -78,7 +78,7 @@ module.exports = function (app) {
   app.get('/api/v1/enrollment/:courseId', async function (req, res) {
     try {
       const enrollment = await db.select('*').from('se_project.enrollments').where('courseId', req.params.courseId)
-      .innerJoin('se_project.users', 'se_project.enrollments.userId', 'se_project.users.uid');
+        .innerJoin('se_project.users', 'se_project.enrollments.userId', 'se_project.users.uid');
       return res.status(200).json(enrollment);
     } catch (e) {
       console.log(e.message);
@@ -135,7 +135,7 @@ module.exports = function (app) {
         .where('cid', req.params.courseId)
         .update('course', req.body.name)
         .update('code', req.body.code)
-        .update('credit hours', req.body.hours);
+        .update('credithours', req.body.hours);
       return res.status(200).json(update);
     } catch (e) {
       console.log(e);

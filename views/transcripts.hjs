@@ -50,7 +50,7 @@
         <tr>
           <td>{{code}}</td>
           <td>{{course}}</td>
-          <td>{{credit hours}}</td>
+          <td>{{credithours}}</td>
           <td>{{grade}}</td>
           {{/enrollment}}
 

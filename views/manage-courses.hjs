@@ -10,7 +10,7 @@
 </head>
 
 <body>
-          {{#isAdmin}}
+  {{#isAdmin}}
   <script>
     function Update(courseId, facultyId) {
 
@@ -42,19 +42,17 @@
         $("#facultyDropdown").text($(this).text());
         const d = index;
         const _url = "/api/v1/faculties/" + String(index);
-          $.ajax({
-            type: "GET",
-            url: _url,
-            success: function (response) {
-              var trHTML = '<thead><tr><th scope="col">student id</th><th scope="col">student Name</th><th scope="col">grade</th></tr></thead>';
-              $.each(response, function (i, item) {
-                trHTML += '<tr><td>' + item.userId + '</td><td>' + item.firstName + "  " + item.lastName + '</td><td><input type="text" class="form-control" id=' + item.userId + ' name="grade" placeholder="grade" value=' + item.grade + '></td></tr>';
-              });
-              var divHTML = '<input id="update" name="update" type="button" value="update" class="btn btn-primary" onclick="update(' + index + ')">';
-              document.getElementById("enrollment").innerHTML = trHTML;
-              document.getElementById("updatebtn").innerHTML = divHTML;
-            }
-          });
+        $.ajax({
+          type: "GET",
+          url: _url,
+          success: function (response) {
+            var trHTML = '<thead><tr><th scope="col">Course Code</th><th scope="col">Course Name</th><th scope="col">Credit Hours</th></tr></thead>';
+            $.each(response, function (i, item) {
+              trHTML += '<tr><td>' + item.code + '</td><td>' + item.course + '</td><td>' + item.credithours + '</td><td><input id="delete" name="delete" type="button" value="delete" onclick="Delete(' + item.cid + ')"class="btn btn-primary"></td><td><input id="update" name="update" type="button" value="update" onclick="Update(' + item.cid + ',' + item.fid + ')"class="btn btn-primary"></td></tr>';
+            });
+            document.getElementById("courses").innerHTML = trHTML;
+          }
+        });
       });
     });
 
@@ -92,32 +90,14 @@
         </div>
       </div>
     </div>
-    {{#facultyId}}
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Course Code</th>
-          <th scope="col">Course Name</th>
-          <th scope="col">Credit Hours</th>
-        </tr>
 
-        {{#course}}
-        <tr>
-          <td>{{code}}</td>
-          <td>{{course}}</td>
-          <td>{{credit hours}}</td>
-          <td><input id="delete" name="delete" type="button" value="delete" onclick="Delete({{cid}})"
-              class="btn btn-primary"></td>
-          <td><input id="update" name="update" type="button" value="update" onclick="Update({{cid}},{{fid}})"
-              class="btn btn-primary"></td>
-        </tr>
-        {{/course}}
-      </thead>
+    <table class="table" id="courses">
+
     </table>
 
   </div>
-  {{/facultyId}}
-          {{/isAdmin}}
+
+  {{/isAdmin}}
 </body>
 
 </html>

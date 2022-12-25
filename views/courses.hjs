@@ -67,7 +67,7 @@
         <tr>
           <td>{{code}}</td>
           <td>{{course}}</td>
-          <td>{{credit hours}}</td>
+          <td>{{credithours}}</td>
           <td><input id="drop" name="Drop" type="button" value="drop" onclick="drop({{courseId}}, {{userId}})"
               class="btn btn-primary"></td>
         </tr>

@@ -116,7 +116,7 @@ module.exports = function (app) {
       .where('userId', user.uid)
       .where('active', true)
       .innerJoin('se_project.courses', 'se_project.enrollments.courseId', 'se_project.courses.cid');
-    const gr = await db.select('grade', 'credit hours as cr')
+    const gr = await db.select('grade', 'credithours as cr')
       .from('se_project.enrollments')
       .where('userId', user.uid)
       .where('active', true)
